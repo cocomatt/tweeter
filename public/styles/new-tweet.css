@@ -26,3 +26,7 @@
 .new-tweet .counter {
   float: right;
 }
+
+.new-tweet .counter-red {
+  color: red;
+}
