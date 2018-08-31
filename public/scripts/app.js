@@ -21,7 +21,7 @@ const tweetObj = {
   'content': {
     'text': 'If I have seen further it is by standing on the shoulders of giants'
   },
-  'created_at': 1461116232227
+  'created_at': 1535746614641
 };
 
 const data = [
@@ -38,7 +38,7 @@ const data = [
     'content': {
       'text': 'If I have seen further it is by standing on the shoulders of giants'
     },
-    'created_at': 1461116232227
+    'created_at': 1535454000000
   },
   {
     'user': {
@@ -52,7 +52,7 @@ const data = [
     'content': {
       'text': 'Je pense , donc je suis'
     },
-    'created_at': 1461113959088
+    'created_at': 1535746614641
   },
   {
     'user': {
@@ -67,31 +67,56 @@ const data = [
     'content': {
       'text': 'Es ist nichts schrecklicher als eine tätige Unwissenheit.'
     },
-    'created_at': 1461113796368
+    'created_at': 1524958200000
   }
 ];
 
+function timeSince(date) {
+  // https://stackoverflow.com/a/3177838/7950458
+  let seconds = Math.floor((new Date() - date) / 1000);
+  let interval = Math.floor(seconds / 31536000);
+  if (interval > 1) {
+    return interval + " years ago";
+  }
+  interval = Math.floor(seconds / 2592000);
+  if (interval > 1) {
+    return interval + " months ago";
+  }
+  interval = Math.floor(seconds / 86400);
+  if (interval > 1) {
+    return interval + " days ago";
+  }
+  interval = Math.floor(seconds / 3600);
+  if (interval > 1) {
+    return interval + " hours ago";
+  }
+  interval = Math.floor(seconds / 60);
+  if (interval > 1) {
+    return interval + " minutes ago";
+  }
+  return Math.floor(seconds) + " seconds ago";
+}
 
 function createTweetElement (tweet) {
   // header section
-  let $header = $("<header></header>");
-  let $avatar = $("<img>").addClass("avatar");
+  const $header = $("<header></header>");
+  const $avatar = $("<img>").addClass("avatar");
   $avatar.attr({ src: tweet.user.avatars.small, alt: "profile picture" })
-  let $name = $("<h1></h1>").addClass("name").text(tweet.user.name);
-  let $handle = $("<h2></h2>").addClass("handle").text(tweet.user.handle);
+  const $name = $("<h1></h1>").addClass("name").text(tweet.user.name);
+  const $handle = $("<h2></h2>").addClass("handle").text(tweet.user.handle);
   $header.append($avatar);
   $header.append($name);
   $header.append($handle);
 
   // body section
-  let $tweetBody = $("<section></section>").addClass("tweet-body");
-  let $tweetText = $("<p></p>").addClass("tweet-text").text(tweet.content.text);
+  const $tweetBody = $("<section></section>").addClass("tweet-body");
+  const $tweetText = $("<p></p>").addClass("tweet-text").text(tweet.content.text);
   $tweetBody.append($tweetText);
 
   // footer section
-  let $footer = $("<footer></footer>");
-  let $date = $("<p></p>").addClass("tweet-date").text(tweet.created_at);
-  let $icons = $("<div></div>");
+  const $footer = $("<footer></footer>");
+  const $date = $("<p></p>").addClass("tweet-date").text(timeSince(tweet.created_at));
+  const $icons = $("<div></div>");
   $icons.append($("<span><a href=''><i class='fas fa-heart'></i></a></span>").addClass("icon"));
   $icons.append($("<span><a href=''><i class='fas fa-retweet'></i></a></span>").addClass("icon"));
   $icons.append($("<span><a href=''><i class='fas fa-flag'></i></a></span>").addClass("icon"));
@@ -100,7 +125,7 @@ function createTweetElement (tweet) {
   $footer.append($icons);
 
   // entire tweet article
-  let $article = $("<article></article>").addClass("tweet");
+  const $article = $("<article></article>").addClass("tweet");
   $article.append($header);
   $article.append($tweetBody);
   $article.append($footer);
