@@ -69,13 +69,14 @@ article.tweet .icon {
   margin-top: 15px;
   margin-right: 10px;
   padding-left: 5px;
-  color: white;
+  color: #7BC3B7;
+  opacity: 0;
 }
 
 article.tweet:hover {
   border: solid gray 2px;
 }
 
-article.tweet:hover footer span {
-  color: #7BC3B7;
+article.tweet:hover footer .icon {
+  opacity: 1;
 }
