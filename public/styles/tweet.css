@@ -23,6 +23,7 @@ article.tweet .avatar {
   border-width: 1px;
   height: 55px;
   margin-left: 10px;
+  margin-right: 10px;
   margin-top: 7px;
   width: 55px;
 }
@@ -37,6 +38,7 @@ article.tweet .name {
 
 article.tweet .handle {
   color: rgba(130, 130, 130, 0.63);
+  float: right;
   font-size: 1em;
   font-weight: 100;
   margin-right: 10px;
