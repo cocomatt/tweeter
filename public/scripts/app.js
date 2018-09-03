@@ -55,6 +55,8 @@ $(document).ready(function() {
   ];
 */
 
+  const MAX_TWEET_LENGTH = 140;
+
   function timeSince(date) {
     // https://stackoverflow.com/a/3177838/7950458
     let seconds = Math.floor((new Date() - date) / 1000);
@@ -122,18 +124,40 @@ $(document).ready(function() {
     });
   }
 
+  function validateTweet (tweetText) {
+    let errorMessages = [];
+    if (!tweetText || tweetText.length === 0) {
+      errorMessages.push("There is no content in your tweet. Please type something!")
+    }
+    if (tweetText.length >= MAX_TWEET_LENGTH) {
+      errorMessages.push(`The maximum length for a tweet is ${MAX_TWEET_LENGTH} characters`);
+    }
+    return errorMessages;
+  }
+
   function submitTweet (event) {
     event.preventDefault();
-    let form = $(this);
-    $.ajax({
-      method: "POST",
-      url: form.attr("action"),
-      data: form.serialize(),
-      success: function(response) {
-        console.log("Response: ", response);
-      }
-    });
-    console.log("Tweet submitted");
+    const errorMessages = validateTweet($(this).find('textarea').val());
+    if (errorMessages.length) {
+      renderFlashMessage(errorMessages);
+    } else {
+      let form = $(this);
+      $.ajax({
+        method: "POST",
+        url: form.attr("action"),
+        data: form.serialize(),
+        success: function(response) {
+          console.log("Tweet submitted");
+        }
+      });
+    }
+    return false;
+  }
+
+  function renderFlashMessage (message) {
+    const dialog = $('.flash');
+    dialog.find('p').text(message);
+    dialog[0].showModal();
   }
 
   function loadTweets () {
@@ -147,8 +171,7 @@ $(document).ready(function() {
     });
   }
 
-  // Test / driver code (temporary)
-  // $('#tweets-container').append($tweet); // to add it to the page so we can make sure it's got all the right elements, classes, etc.
   loadTweets();
   $("#tweet-submission-form").on("submit", submitTweet);
+  $('dialog').on('click', '.close', function(event) { $(this).parent()[0].close(); });
 });
