@@ -51,6 +51,7 @@ article.tweet .tweet-body {
 article.tweet .tweet-text {
   font-size: 1.3em;
   margin-left: 15px;
+  margin-right: 15px;
   margin-top: 10px;
   margin-bottom: 10px;
 }

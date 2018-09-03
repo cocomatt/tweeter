@@ -54,35 +54,6 @@ $(document).ready(function() {
     }
   ];
 */
-  function timeSince(date) {
-    // https://stackoverflow.com/a/3177838/7950458
-    let seconds = Math.floor((new Date() - date) / 1000);
-    let interval = Math.floor(seconds / 31536000);
-    if (interval > 1) {
-      return interval + " years ago";
-    }
-    interval = Math.floor(seconds / 2592000);
-    if (interval > 1) {
-      return interval + " months ago";
-    }
-    interval = Math.floor(seconds / 86400);
-    if (interval > 1) {
-      return interval + " days ago";
-    }
-    interval = Math.floor(seconds / 3600);
-    if (interval > 1) {
-      return interval + " hours ago";
-    }
-    interval = Math.floor(seconds / 60);
-    if (interval > 1) {
-      return interval + " minutes ago";
-    }
-    interval = Math.floor(seconds);
-    if (interval > 0) {
-    return seconds + " seconds ago";
-    }
-    return "Just now";
-  }
 
   function createTweetElement (tweet) {
     // header section
@@ -132,7 +103,7 @@ $(document).ready(function() {
       errorMessages.push("There is no content in your tweet. Please type something!")
     }
     if (tweetText.length >= MAX_TWEET_LENGTH) {
-      errorMessages.push(`The maximum length for a tweet is ${MAX_TWEET_LENGTH} characters`);
+      errorMessages.push(`The maximum length for a tweet is ${MAX_TWEET_LENGTH} characters!`);
     }
     return errorMessages;
   }
@@ -148,15 +119,19 @@ $(document).ready(function() {
         method: "POST",
         url: form.attr("action"),
         data: form.serialize(),
-        success: loadTweets
+        success: function () {
+          loadTweets();
+          $("textarea").val("");
+          $(".new-tweet").slideUp();
+        }
       });
     }
     return false;
   }
 
   function renderFlashMessage (message) {
-    const dialog = $('.flash');
-    dialog.find('p').text(message);
+    const dialog = $(".flash");
+    dialog.find("p").text(message);
     dialog[0].showModal();
   }
 
@@ -166,12 +141,19 @@ $(document).ready(function() {
       method: "GET",
       success: function(response) {
         renderTweets(response);
-        console.log("Success: ", response);
       }
     });
   }
 
+  const newTweet = $(".new-tweet");
+  newTweet.hide();
   loadTweets();
+  $(".compose").on("click", function() {
+    $(".new-tweet").slideToggle();
+    $(".new-tweet textarea").focus();
+  });
   $("#tweet-submission-form").on("submit", submitTweet);
-  $('dialog').on('click', '.close', function(event) { $(this).parent()[0].close(); });
+  $('dialog').on('click', '.close', function(event) {
+    $(this).parent()[0].close();
+  });
 });
