@@ -54,9 +54,6 @@ $(document).ready(function() {
     }
   ];
 */
-
-  const MAX_TWEET_LENGTH = 140;
-
   function timeSince(date) {
     // https://stackoverflow.com/a/3177838/7950458
     let seconds = Math.floor((new Date() - date) / 1000);
@@ -125,6 +122,7 @@ $(document).ready(function() {
   }
 
   function validateTweet (tweetText) {
+    const MAX_TWEET_LENGTH = 140;
     let errorMessages = [];
     if (!tweetText || tweetText.length === 0) {
       errorMessages.push("There is no content in your tweet. Please type something!")
