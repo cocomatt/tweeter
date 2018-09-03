@@ -77,7 +77,11 @@ $(document).ready(function() {
     if (interval > 1) {
       return interval + " minutes ago";
     }
-    return Math.floor(seconds) + " seconds ago";
+    interval = Math.floor(seconds);
+    if (interval > 0) {
+    return seconds + " seconds ago";
+    }
+    return "Just now";
   }
 
   function createTweetElement (tweet) {
@@ -117,7 +121,7 @@ $(document).ready(function() {
 
   function renderTweets (tweets) {
     tweets.forEach(function(tweet) {
-      $("#tweets-container").append(createTweetElement(tweet));
+      $("#tweets-container").prepend(createTweetElement(tweet));
     });
   }
 
@@ -144,9 +148,7 @@ $(document).ready(function() {
         method: "POST",
         url: form.attr("action"),
         data: form.serialize(),
-        success: function(response) {
-          console.log("Tweet submitted");
-        }
+        success: loadTweets
       });
     }
     return false;
