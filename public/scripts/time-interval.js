@@ -9,13 +9,19 @@ function timeSince(date) {
   ];
 
   const seconds = Math.floor((Date.now() - date) / 1000);
-  const interval = intervals.find(i => i.seconds < seconds);
-  const count = Math.floor(seconds / interval.seconds);
-  if (count == 1) {
-    return `${count} ${interval.label} ago`;
-  } else if (count > 1) {
-    return `${count} ${interval.label}s ago`;
+  if (seconds) {
+    const interval = intervals.find(i => i.seconds < seconds);
+    const count = Math.floor(seconds / interval.seconds);
+    if (count == 1) {
+      console.log("count if == 1: ", count);
+      return `${count} ${interval.label} ago`;
+    } else if (count > 1) {
+      console.log("count if > 1: ", count);
+      return `${count} ${interval.label}s ago`;
+    } else {
+      return false;
+    }
   } else {
-    return "Brand new tweet"
+    return "Brand new tweet";
   }
 }
