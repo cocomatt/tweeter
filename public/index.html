@@ -37,6 +37,8 @@
     <!-- Tweet icons -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 
+    <!-- Constant global variables -->
+    <script type="text/javascript" src="/scripts/constants.js"></script>
 
   </head>
 
@@ -63,7 +65,7 @@
         <form id="tweet-submission-form" action="/tweets" method="POST">
           <textarea name="text" placeholder="What are you humming about?"></textarea>
           <input type="submit" value="Tweet">
-          <span class="counter">140</span>
+          <span class="counter"></span>
         </form>
       </section>
       <section id="tweets-container">

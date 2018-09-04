@@ -51,7 +51,6 @@ $(document).ready(function() {
 
   /* Tweet form validation */
   function validateTweet (tweetText) {
-    const MAX_TWEET_LENGTH = 140;
     let errorMessages = [];
     if (!tweetText || tweetText.length === 0) {
       errorMessages.push("There is no content in your tweet. Please type something!")
@@ -65,7 +64,7 @@ $(document).ready(function() {
   /* async tweet sumbission to database and rendition on same page */
   function submitTweet (event) {
     event.preventDefault();
-    const errorMessages = validateTweet($(this).find('textarea').val());
+    const errorMessages = validateTweet($(this).find("textarea").val());
     if (errorMessages.length) {
       renderFlashMessage(errorMessages);
     } else {
@@ -78,13 +77,14 @@ $(document).ready(function() {
           loadTweets();
           $("textarea").val("");
           $(".new-tweet").slideUp();
+          $(".new-tweet .counter").text(MAX_TWEET_LENGTH);
         }
       });
     }
     return false;
   }
 
-  /* Flash message behaviour on tweet invalidation */
+  /* Flash message rendition */
   function renderFlashMessage (message) {
     const dialog = $(".flash");
     dialog.find("p").text(message);
@@ -106,15 +106,22 @@ $(document).ready(function() {
   const newTweet = $(".new-tweet");
   newTweet.hide();
   $("#tweet-submission-form").on("submit", submitTweet);
-  $('dialog').on('click', '.close', function(event) {
-    $(this).parent()[0].close();
-  });
 
   /* Compose button behaviour */
   $(".compose").on("click", function() {
+    // let counter = $(this).parent().find(".counter");
+    // counter.text(MAX_TWEET_LENGTH);
+    // console.log("$this: ", $(this));
+
+
+
     $(".new-tweet").slideToggle();
     $(".new-tweet textarea").focus();
   });
 
+  /* Flash message behaviour */
+  $("dialog").on("click", ".close", function(event) {
+    $(this).parent()[0].close();
+  });
   loadTweets();
 });

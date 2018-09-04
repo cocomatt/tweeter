@@ -9,8 +9,10 @@ function timeSince(date) {
   ];
 
   const seconds = Math.floor((Date.now() - date) / 1000);
-  if (seconds) {
-    const interval = intervals.find(i => i.seconds < seconds);
+  if (seconds < 1) {
+    return "Brand new tweet";
+  } else {
+    const interval = intervals.find(intervals => intervals.seconds < seconds);
     const count = Math.floor(seconds / interval.seconds);
     if (count == 1) {
       return `${count} ${interval.label} ago`;
@@ -19,7 +21,5 @@ function timeSince(date) {
     } else {
       return false;
     }
-  } else {
-    return "Brand new tweet";
   }
 }
