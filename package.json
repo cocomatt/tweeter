@@ -4,6 +4,7 @@
   "description": "A twitter clone by Lighthouse Labs for web bootcamp students to learn front-end dev skillz",
   "main": "server/index.js",
   "scripts": {
+    "pretest": "eslint --ignore-path .gitignore .",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server/index.js",
     "local": "./node_modules/.bin/nodemon --watch server -e js server/index.js"
@@ -18,6 +19,9 @@
     "mongodb": "^2.2.36"
   },
   "devDependencies": {
-    "nodemon": "^1.9.2"
+    "eslint": "^5.5.0",
+    "eslint-config-strongloop": "^2.1.0",
+    "nodemon": "^1.9.2",
+    "prettier": "1.14.2"
   }
 }

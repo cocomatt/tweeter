@@ -1,14 +1,16 @@
+'use strict';
+
 $(document).ready(function() {
-  $(".new-tweet").on("keyup", "textarea", function() {
-    let counter = $(this).parent().find(".counter");
+  $('.new-tweet').on('keyup', 'textarea', function() {
+    let charCounter = $(this).parent().find('.counter');
     let tweetLimit = MAX_TWEET_LENGTH;
     let charValue = $(this).val().length;
     if ((tweetLimit - charValue) < 0) {
-      counter.addClass("counter-red");
-      counter.text(tweetLimit - charValue);
+      charCounter.addClass('counter-red');
+      charCounter.text(tweetLimit - charValue);
     } else {
-      counter.removeClass("counter-red");
-      counter.text(tweetLimit - charValue);
+      charCounter.removeClass('counter-red');
+      charCounter.text(tweetLimit - charValue);
     }
   });
 });

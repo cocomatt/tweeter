@@ -1,76 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Meta Information -->
-    <title>Tweeter - Home Page</title>
 
-    <!-- External CSS -->
-    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+<head>
+  <!-- Meta Information -->
+  <title>Tweeter - Home Page</title>
 
-    <!-- App CSS -->
-    <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+  <!-- External CSS -->
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
 
-    <!-- Nav CSS -->
-    <link rel="stylesheet" href="/styles/nav.css" type="text/css" />
+  <!-- App CSS -->
+  <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
 
-    <!-- New Tweet CSS -->
-    <link rel="stylesheet" href="/styles/new-tweet.css" type="text/css" />
+  <!-- Nav CSS -->
+  <link rel="stylesheet" href="/styles/nav.css" type="text/css" />
 
-    <!-- Tweet CSS -->
-    <link rel="stylesheet" href="/styles/tweet.css" type="text/css" />
+  <!-- New Tweet CSS -->
+  <link rel="stylesheet" href="/styles/new-tweet.css" type="text/css" />
 
-    <!-- Font CSS -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i" />
+  <!-- Tweet CSS -->
+  <link rel="stylesheet" href="/styles/tweet.css" type="text/css" />
 
-    <!-- External JS -->
-    <script type="text/javascript" src="/vendor/jquery-2.2.3.min.js"></script>
+  <!-- Font CSS -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i" />
 
-    <!-- App JS -->
-    <script type="text/javascript" src="/scripts/app.js"></script>
+  <!-- External JS -->
+  <script type="text/javascript" src="/vendor/jquery-2.2.3.min.js"></script>
 
-    <!-- Character counter JS -->
-    <script type="text/javascript" src="/scripts/composer-char-counter.js"></script>
+  <!-- App JS -->
+  <script type="text/javascript" src="/scripts/app.js"></script>
 
-    <!-- Time Interval JS -->
-    <script type="text/javascript" src="/scripts/time-interval.js"></script>
+  <!-- Character counter JS -->
+  <script type="text/javascript" src="/scripts/composer-char-counter.js"></script>
 
-    <!-- Tweet icons -->
-    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+  <!-- Time Interval JS -->
+  <script type="text/javascript" src="/scripts/time-interval.js"></script>
 
-    <!-- Constant global variables -->
-    <script type="text/javascript" src="/scripts/constants.js"></script>
+  <!-- Tweet icons -->
+  <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 
-  </head>
+  <!-- Constant global variables -->
+  <script type="text/javascript" src="/scripts/constants.js"></script>
 
-  <body>
+</head>
 
-    <!-- Top nav bar (fixed) -->
-    <nav id="nav-bar">
-      <img class="logo" src="/images/bird.png">
-      <span class="header">Tweeter</span>
-      <button class="compose"><i class="far fa-edit"></i>Compose</button>
-    </nav>
+<body>
 
-    <!-- Flash Message Dialog -->
-    <dialog class="flash">
-      <h1 class="error-oops">Oops!</h1>
-      <p class="error-messsage"></p>
-      <button class="close">Okay</button>
-    </dialog>
+  <!-- Top nav bar (fixed) -->
+  <nav id="nav-bar">
+    <img class="logo" src="/images/bird.png">
+    <span class="header">Tweeter</span>
+    <button class="compose"><i class="far fa-edit"></i>Compose</button>
+  </nav>
 
-    <!-- Page-specific (main) content here -->
-    <main class="container">
-      <section class="new-tweet">
-        <h2>Compose Tweet</h2>
-        <form id="tweet-submission-form" action="/tweets" method="POST">
-          <textarea name="text" placeholder="What are you humming about?"></textarea>
-          <input type="submit" value="Tweet">
-          <span class="counter"></span>
-        </form>
-      </section>
-      <section id="tweets-container">
+  <!-- Flash Message Dialog -->
+  <dialog class="flash">
+    <h1 class="error-oops">Oops!</h1>
+    <p class="error-messsage"></p>
+    <button class="close">Okay</button>
+  </dialog>
 
-<!-- hard-coded tweet example
+  <!-- Page-specific (main) content here -->
+  <main class="container">
+    <section class="new-tweet">
+      <h2>Compose Tweet</h2>
+      <form id="tweet-submission-form" action="/tweets" method="POST">
+        <textarea name="text" placeholder="What are you humming about?"></textarea>
+        <input type="submit" value="Tweet">
+        <span class="counter"></span>
+      </form>
+    </section>
+    <section id="tweets-container">
+
+      <!-- hard-coded tweet example
 
         <article class="tweet">
           <header>
@@ -102,7 +103,8 @@
         </article>
 -->
 
-      </section>
-    </main>
-  </body>
+    </section>
+  </main>
+</body>
+
 </html>

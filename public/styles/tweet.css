@@ -45,9 +45,6 @@ article.tweet .handle {
   margin-top: 15px;
 }
 
-article.tweet .tweet-body {
-}
-
 article.tweet .tweet-text {
   font-size: 1.3em;
   margin-left: 15px;
@@ -74,6 +71,10 @@ article.tweet .icon {
   padding-left: 5px;
   color: #7BC3B7;
   opacity: 0;
+}
+
+article a:visited {
+  color: #7BC3B7;
 }
 
 article.tweet:hover {
