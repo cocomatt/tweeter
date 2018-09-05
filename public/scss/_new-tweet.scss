@@ -1,0 +1,33 @@
+.new-tweet {
+  margin-top: 40px;
+  background-color: #ececec;
+  border-color: #bdbdbd;
+  border-radius: 5px;
+  border-style: solid;
+  border-width: 1px;
+  display: flex;
+  flex-direction: column;
+  padding: 0.5em;
+
+  h2 {
+    border-bottom: solid #4a4747 2.2px;
+    margin-top: 0;
+  }
+
+  input {
+    float: left;
+  }
+
+  textarea {
+    width: 368px;
+    padding: 0.3em;
+  }
+
+  .counter {
+    float: right;
+  }
+
+  .counter-red {
+    color: red;
+  }
+}
