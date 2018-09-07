@@ -34,6 +34,8 @@ module.exports = function(DataHelpers) {
         text: req.body.text,
       },
       created_at: Date.now(),
+      // should this be an array?
+      likes: [],
     };
 
     DataHelpers.saveTweet(tweet, (err) => {

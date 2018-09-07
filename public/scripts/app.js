@@ -9,6 +9,7 @@ $(document).ready(function() {
 
   /* Tweet creation */
   const createTweetElement = function createTweetElementFromTweetsDatabase(tweet) {
+    console.log('createTweetElement invoked');
     // header section
     const $header = $('<header></header>');
     const $avatar = $('<img>').addClass('avatar');
@@ -18,9 +19,7 @@ $(document).ready(function() {
     });
     const $name = $('<h1></h1>').addClass('name').text(tweet.user.name);
     const $handle = $('<h2></h2>').addClass('handle').text(tweet.user.handle);
-    $header.append($avatar);
-    $header.append($name);
-    $header.append($handle);
+    $header.append($avatar, $name, $handle);
 
     // body section
     const $tweetBody = $('<section></section>').addClass('tweet-body');
@@ -30,24 +29,22 @@ $(document).ready(function() {
     // footer section
     const $footer = $('<footer></footer>');
     const $date = $('<p></p>').addClass('tweet-date').text(timeSince(tweet.created_at));
-    const $icons = $('<div></div>');
-    $icons.append($("<span><a href=''><i class='fas fa-heart'></i></a></span>").addClass('icon'));
+    const $likesCounter = $('<p></p>').addClass('tweet-likes').text(tweet.likes + ' likes');
+    const $icons = $('<div></div>').addClass('icons');
+    $icons.append($('<a></a>').addClass('icon like-tweet').attr('href', `/tweets/${tweet._id}`));
     $icons.append($("<span><a href=''><i class='fas fa-retweet'></i></a></span>").addClass('icon'));
     $icons.append($("<span><a href=''><i class='fas fa-flag'></i></a></span>").addClass('icon'));
-
-    $footer.append($date);
-    $footer.append($icons);
+    $footer.append($date, $likesCounter, $icons);
 
     // entire tweet article
     const $article = $('<article></article>').addClass('tweet');
-    $article.append($header);
-    $article.append($tweetBody);
-    $article.append($footer);
+    $article.append($header, $tweetBody, $footer);
     return $article;
   };
 
   /* tweets in database are rendered on page */
   const renderTweets = function prependEachTweetFromArrayOfTweets(tweets) {
+    console.log('renderTweets invoked');
     tweets.forEach(function(tweet) {
       $('#tweets-container').prepend(createTweetElement(tweet));
     });
@@ -55,6 +52,7 @@ $(document).ready(function() {
 
   /* Tweet form validation */
   const validateTweet = function checkTweetForContentAndLength(tweetText) {
+    console.log('validateTweet invoked');
     let errorMessages = [];
     if (!tweetText || tweetText.length === 0) {
       errorMessages.push('There is no content in your tweet. Please type something!');
@@ -67,6 +65,7 @@ $(document).ready(function() {
 
   /* async tweet sumbission to database and rendition on same page */
   const submitTweet = function postTweetAndRefetchOtherTweets(event) {
+    console.log('submitTweet invoked');
     event.preventDefault();
     const errorMessages = validateTweet($(this).find('textarea').val());
     if (errorMessages.length) {
@@ -90,6 +89,7 @@ $(document).ready(function() {
 
   /* Flash message rendition */
   const renderFlashMessage = function invalidTweetDialogBox(message) {
+    console.log('renderFlashMessage invoked');
     const dialog = $('.flash');
     dialog.find('p').text(message);
     dialog[0].showModal();
@@ -97,6 +97,7 @@ $(document).ready(function() {
 
   /* async loading of rendered tweets on page */
   const loadTweets = function loadTweetsFromDatabase() {
+    console.log('loadTweet invoked');
     $.ajax({
       url: '/tweets',
       method: 'GET',
