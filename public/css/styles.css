@@ -167,7 +167,6 @@ main.container {
     font-weight: 900;
     content: "\f004";
     color: #7BC3B7;
-    text-decoration: none;
     cursor: pointer; }
   .tweet .retweet-tweet:before {
     font-family: "Font Awesome 5 Free";
@@ -185,8 +184,11 @@ main.container {
     color: #7BC3B7;
     text-decoration: none;
     cursor: pointer; }
-  .tweet i {
-    text-decoration: none; }
+  .tweet button {
+    background-color: transparent;
+    border: 0; }
+  .tweet button:focus {
+    outline: none; }
   .tweet:hover {
     border: solid gray 2px; }
   .tweet:hover .icon {

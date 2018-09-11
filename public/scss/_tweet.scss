@@ -99,7 +99,7 @@
     font-weight: 900;
     content: "\f004";
     color: #7BC3B7;
-    text-decoration: none;
+    // text-decoration: none;
     cursor: pointer;
   }
 
@@ -123,9 +123,19 @@
     cursor: pointer;
   }
 
-  i {
-    text-decoration: none;
-  }
+    button {
+      background-color: transparent;
+      border: 0;
+    }
+
+    button:focus {
+      outline: none;
+    }
+
+
+  // a {
+  //   text-decoration: none;
+  // }
   // a:visited {
   //   color: #7BC3B7;
   // }

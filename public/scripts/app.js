@@ -33,9 +33,9 @@ $(document).ready(function() {
     const $date = $('<p></p>').addClass('tweet-date').text(timeSince(tweet.created_at));
     const $likes = $('<p></p>').addClass('tweet-likes').text(numberOfLikes(tweet.likes));
     const $icons = $('<div></div>').addClass('icons');
-    const $heart = $('<span></span>').addClass(showUserLikedTweets(tweet, user)).attr('href', '#/');
-    const $retweet = $('<span></span>').addClass('icon retweet-tweet').attr('href', '#/');
-    const $flag = $('<span></span>').addClass('icon flag-tweet').attr('href', '#/');
+    const $heart = $('<button></button>').addClass(showUserLikedTweets(tweet, user)).attr({href: 'javascript:void(0);', title: 'Like'});
+    const $retweet = $('<span></span>').addClass('icon retweet-tweet').attr('href', 'javascript:void(0);');
+    const $flag = $('<span></span>').addClass('icon flag-tweet').attr('href', 'javascript:void(0);');
     $icons.append($heart);
     $icons.append($retweet);
     $icons.append($flag);
@@ -43,7 +43,7 @@ $(document).ready(function() {
 
     // entire tweet article
     const $article = $('<article></article>').addClass('tweet');
-    // $article.attr('data-tweetId', tweet._id);
+    $article.attr('data-tweetId', tweet._id);
     $article.append($header, $tweetBody, $footer);
     return $article;
   };
@@ -131,8 +131,9 @@ $(document).ready(function() {
   const updateTweetLikesArray = function incrementOrDecrementTweetLikes(event) {
     console.log('updateTweetLikesArray invoked');
     event.preventDefault();
+    let tweetId = $(this).closest('article').data(tweetId);
     $.ajax({
-      method: 'PUT',
+      method: 'POST',
       url: '/tweets',
       data: {id: $(this).closest('article').data('tweetId'), option: $(this).data('liked')},
       dataType: 'json',
@@ -165,7 +166,12 @@ $(document).ready(function() {
   });
 
   /* Tweet button behaviour */
-  $('.like-tweet').on('click', updateTweetLikesArray);
+  // $('.like-tweet').on('click', updateTweetLikesArray);
+  $(document).on('click', 'button.icon.like-tweet-no, button.icon.like-tweet-yes', function(event) {
+    event.preventDefault();
+    console.log('like button clicked');
+    // return false;
+  });
 
   loadTweets();
 

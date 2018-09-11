@@ -20,8 +20,20 @@ module.exports = function makeDataHelpers(db) {
     },
 
     // Updates likes array for an individual tweet in `db`
-    // updateLikes: function(tweet, likes, callback) {
-    //   db.collection('tweets').findOne({ _id: (tweet._id), likes: (tweet.likes) }).toArray(callback);
-    // },
+    updateLikes: function(tweetId, user, callback) {
+      db.collection('tweets').findOne({ _id: ObjectId(tweetId)}, function(err, result) {
+        if (err) {
+          callback(err, null);
+        }
+        let index = result.likes.indexOf(user);
+        if (index > -1) {
+          result.likes.push(user);
+          callback(null, true);
+        } else {
+          result.likes.splice(index, 1);
+          callback(null, false);
+        }
+      });
+    },
   };
 };
