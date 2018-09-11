@@ -153,15 +153,39 @@ main.container {
     padding-left: 5px;
     color: #7BC3B7;
     opacity: 0; }
-  .tweet .like-tweet:before {
+  .tweet .like-tweet-yes:before {
     font-family: "Font Awesome 5 Free";
     font-style: normal;
     font-weight: 900;
     content: "\f004";
-    text-decoration: none; }
-  .tweet .like-tweet:after {
-    color: red; }
-  .tweet a {
+    color: red;
+    text-decoration: none;
+    cursor: pointer; }
+  .tweet .like-tweet-no:before {
+    font-family: "Font Awesome 5 Free";
+    font-style: normal;
+    font-weight: 900;
+    content: "\f004";
+    color: #7BC3B7;
+    text-decoration: none;
+    cursor: pointer; }
+  .tweet .retweet-tweet:before {
+    font-family: "Font Awesome 5 Free";
+    font-style: normal;
+    font-weight: 900;
+    content: "\f079";
+    color: #7BC3B7;
+    text-decoration: none;
+    cursor: pointer; }
+  .tweet .flag-tweet:before {
+    font-family: "Font Awesome 5 Free";
+    font-style: normal;
+    font-weight: 900;
+    content: "\f024";
+    color: #7BC3B7;
+    text-decoration: none;
+    cursor: pointer; }
+  .tweet i {
     text-decoration: none; }
   .tweet:hover {
     border: solid gray 2px; }

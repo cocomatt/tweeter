@@ -83,19 +83,47 @@
     opacity: 0;
   }
 
-  .like-tweet:before {
+  .like-tweet-yes:before {
     font-family: "Font Awesome 5 Free";
     font-style: normal;
     font-weight: 900;
     content: "\f004";
-    text-decoration: none;
-  }
-
-  .like-tweet:after {
     color: red;
+    text-decoration: none;
+    cursor: pointer;
   }
 
-  a {
+  .like-tweet-no:before {
+    font-family: "Font Awesome 5 Free";
+    font-style: normal;
+    font-weight: 900;
+    content: "\f004";
+    color: #7BC3B7;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .retweet-tweet:before {
+    font-family: "Font Awesome 5 Free";
+    font-style: normal;
+    font-weight: 900;
+    content: "\f079";
+    color: #7BC3B7;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .flag-tweet:before {
+    font-family: "Font Awesome 5 Free";
+    font-style: normal;
+    font-weight: 900;
+    content: "\f024";
+    color: #7BC3B7;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  i {
     text-decoration: none;
   }
   // a:visited {

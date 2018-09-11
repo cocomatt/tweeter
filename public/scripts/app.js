@@ -7,6 +7,8 @@
 
 $(document).ready(function() {
 
+  const user = '@FrogLife';
+
   /* Tweet creation */
   const createTweetElement = function createTweetElementFromTweetsDatabase(tweet) {
     console.log('createTweetElement invoked');
@@ -29,15 +31,19 @@ $(document).ready(function() {
     // footer section
     const $footer = $('<footer></footer>');
     const $date = $('<p></p>').addClass('tweet-date').text(timeSince(tweet.created_at));
-    const $likesCounter = $('<p></p>').addClass('tweet-likes').text(tweet.likes + ' likes');
+    const $likes = $('<p></p>').addClass('tweet-likes').text(numberOfLikes(tweet.likes));
     const $icons = $('<div></div>').addClass('icons');
-    $icons.append($('<a></a>').addClass('icon like-tweet').attr('href', `/tweets/${tweet._id}`));
-    $icons.append($("<span><a href=''><i class='fas fa-retweet'></i></a></span>").addClass('icon'));
-    $icons.append($("<span><a href=''><i class='fas fa-flag'></i></a></span>").addClass('icon'));
-    $footer.append($date, $likesCounter, $icons);
+    const $heart = $('<span></span>').addClass(showUserLikedTweets(tweet, user)).attr('href', '#/');
+    const $retweet = $('<span></span>').addClass('icon retweet-tweet').attr('href', '#/');
+    const $flag = $('<span></span>').addClass('icon flag-tweet').attr('href', '#/');
+    $icons.append($heart);
+    $icons.append($retweet);
+    $icons.append($flag);
+    $footer.append($date, $likes, $icons);
 
     // entire tweet article
     const $article = $('<article></article>').addClass('tweet');
+    // $article.attr('data-tweetId', tweet._id);
     $article.append($header, $tweetBody, $footer);
     return $article;
   };
@@ -48,6 +54,16 @@ $(document).ready(function() {
     tweets.forEach(function(tweet) {
       $('#tweets-container').prepend(createTweetElement(tweet));
     });
+  };
+
+  /* makes heart red if user likes tweet */
+  const showUserLikedTweets = function makeHeartRedIfUserLikesTweet(tweet, user) {
+    // console.log('showUserLikedTweets invoked');
+    if ((tweet.likes).indexOf(user) > -1) {
+      // console.log('handle exists in likes array');
+      return 'icon like-tweet-yes';
+    }
+    return 'icon like-tweet-no';
   };
 
   /* Tweet form validation */
@@ -77,7 +93,7 @@ $(document).ready(function() {
         url: form.attr('action'),
         data: form.serialize(),
         success: function() {
-          loadTweets();
+          loadTweets(1);
           $('textarea').val('');
           $('.new-tweet').slideUp();
           $('.new-tweet .counter').text(MAX_TWEET_LENGTH);
@@ -96,13 +112,17 @@ $(document).ready(function() {
   };
 
   /* async loading of rendered tweets on page */
-  const loadTweets = function loadTweetsFromDatabase() {
+  const loadTweets = function loadTweetsFromDatabase(option) {
     console.log('loadTweet invoked');
     $.ajax({
       url: '/tweets',
       method: 'GET',
-      success: function(response) {
-        renderTweets(response);
+      success: function(tweets) {
+        if (option === 1) {
+          renderTweets([tweets.pop()]);
+        } else {
+          renderTweets(tweets);
+        }
       },
     });
   };

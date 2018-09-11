@@ -18,5 +18,10 @@ module.exports = function makeDataHelpers(db) {
     getTweets: function(callback) {
       db.collection('tweets').find().sort({ created_at: 1 }).toArray(callback);
     },
+
+    // Updates likes array for an individual tweet in `db`
+    // updateLikes: function(tweet, likes, callback) {
+    //   db.collection('tweets').findOne({ _id: (tweet._id), likes: (tweet.likes) }).toArray(callback);
+    // },
   };
 };
