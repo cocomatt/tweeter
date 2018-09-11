@@ -127,6 +127,24 @@ $(document).ready(function() {
     });
   };
 
+  /* async tweet sumbission to database and rendition on same page */
+  const updateTweetLikesArray = function incrementOrDecrementTweetLikes(event) {
+    console.log('updateTweetLikesArray invoked');
+    event.preventDefault();
+    $.ajax({
+      method: 'PUT',
+      url: '/tweets',
+      data: {id: $(this).closest('article').data('tweetId'), option: $(this).data('liked')},
+      dataType: 'json',
+      success: function(rsponse) {
+        numberOfLikes(response);
+        console.log('numberOfLikes(response): ', numberOfLikes(response));
+        heartColor((response.likes), user);
+        console.log('heartColor(response.likes, user): ', heartColor((response.likes), user));
+      },
+    });
+  };
+
   /* New tweet is hidden to begin with */
   const newTweet = $('.new-tweet');
   newTweet.hide();
@@ -145,5 +163,10 @@ $(document).ready(function() {
   $('dialog').on('click', '.close', function(event) {
     $(this).parent()[0].close();
   });
+
+  /* Tweet button behaviour */
+  $('.like-tweet').on('click', updateTweetLikesArray);
+
   loadTweets();
+
 });
