@@ -83,27 +83,25 @@
     opacity: 0;
   }
 
-  .like-tweet-yes:before {
+  .like-tweet-selected::before {
     font-family: "Font Awesome 5 Free";
     font-style: normal;
     font-weight: 900;
     content: "\f004";
     color: red;
-    text-decoration: none;
     cursor: pointer;
   }
 
-  .like-tweet-no:before {
+  .like-tweet-deselected::before {
     font-family: "Font Awesome 5 Free";
     font-style: normal;
     font-weight: 900;
     content: "\f004";
     color: #7BC3B7;
-    // text-decoration: none;
     cursor: pointer;
   }
 
-  .retweet-tweet:before {
+  .retweet-tweet::before {
     font-family: "Font Awesome 5 Free";
     font-style: normal;
     font-weight: 900;
@@ -113,7 +111,7 @@
     cursor: pointer;
   }
 
-  .flag-tweet:before {
+  .flag-tweet::before {
     font-family: "Font Awesome 5 Free";
     font-style: normal;
     font-weight: 900;
@@ -123,14 +121,14 @@
     cursor: pointer;
   }
 
-    button {
-      background-color: transparent;
-      border: 0;
-    }
+  button {
+    background-color: transparent;
+    border: 0;
+  }
 
-    button:focus {
-      outline: none;
-    }
+  button:focus {
+    outline: none;
+  }
 
 
   // a {

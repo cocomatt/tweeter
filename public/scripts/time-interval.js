@@ -28,7 +28,7 @@ const timeSince = function elapsedTimeSinceTweetCreation(date) {
   ];
 
   const seconds = Math.floor((Date.now() - date) / 1000);
-  if (seconds < 1) {
+  if (seconds < 5) {
     return 'Brand new tweet';
   } else {
     const interval = intervals.find(intervals => intervals.seconds < seconds);

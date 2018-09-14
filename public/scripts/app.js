@@ -7,6 +7,7 @@
 
 $(document).ready(function() {
 
+
   const user = '@FrogLife';
 
   /* Tweet creation */
@@ -33,7 +34,11 @@ $(document).ready(function() {
     const $date = $('<p></p>').addClass('tweet-date').text(timeSince(tweet.created_at));
     const $likes = $('<p></p>').addClass('tweet-likes').text(numberOfLikes(tweet.likes));
     const $icons = $('<div></div>').addClass('icons');
-    const $heart = $('<button></button>').addClass(showUserLikedTweets(tweet, user)).attr({href: 'javascript:void(0);', title: 'Like'});
+    const $heart = $('<button></button>').addClass(`icon ${showUserLikedTweets(tweet, user)}`).attr({
+      title: 'Like',
+      action: `/tweets/${tweet._id}/${user}`,
+      method: 'POST',
+    });
     const $retweet = $('<span></span>').addClass('icon retweet-tweet').attr('href', 'javascript:void(0);');
     const $flag = $('<span></span>').addClass('icon flag-tweet').attr('href', 'javascript:void(0);');
     $icons.append($heart);
@@ -43,8 +48,10 @@ $(document).ready(function() {
 
     // entire tweet article
     const $article = $('<article></article>').addClass('tweet');
-    $article.attr('data-tweetId', tweet._id);
     $article.append($header, $tweetBody, $footer);
+    $article.attr({
+      'data-tweetid': tweet._id,
+    });
     return $article;
   };
 
@@ -61,9 +68,9 @@ $(document).ready(function() {
     // console.log('showUserLikedTweets invoked');
     if ((tweet.likes).indexOf(user) > -1) {
       // console.log('handle exists in likes array');
-      return 'icon like-tweet-yes';
+      return 'like-tweet-selected';
     }
-    return 'icon like-tweet-no';
+    return 'like-tweet-deselected';
   };
 
   /* Tweet form validation */
@@ -77,6 +84,17 @@ $(document).ready(function() {
       errorMessages.push(`The maximum length for a tweet is ${MAX_TWEET_LENGTH} characters!`);
     }
     return errorMessages;
+  };
+
+  const clearTextArea = function clearsTextAreaAndResetsCharacterCounter() {
+    $('textarea').val('');
+    $('.new-tweet').slideUp();
+    $('.new-tweet .counter').text(MAX_TWEET_LENGTH);
+  };
+
+  const toggleHeartColor = function changesColorOfHeartDependingOnPreviousColor() {
+    console.log('toggleHeartColor invoked');
+    $('button').toggleClass('like-tweet-selected like-tweet-deselected');
   };
 
   /* async tweet sumbission to database and rendition on same page */
@@ -93,10 +111,10 @@ $(document).ready(function() {
         url: form.attr('action'),
         data: form.serialize(),
         success: function() {
-          loadTweets(1);
-          $('textarea').val('');
-          $('.new-tweet').slideUp();
-          $('.new-tweet .counter').text(MAX_TWEET_LENGTH);
+          console.log('Tweet submitted');
+          loadTweets('newTweetYes');
+          clearTextArea();
+          console.log('Text area cleared');
         },
       });
     }
@@ -112,13 +130,15 @@ $(document).ready(function() {
   };
 
   /* async loading of rendered tweets on page */
-  const loadTweets = function loadTweetsFromDatabase(option) {
-    console.log('loadTweet invoked');
+  const loadTweets = function loadTweetsFromDatabase(newTweet) {
+    console.log('loadTweets invoked');
     $.ajax({
       url: '/tweets',
       method: 'GET',
+      data: {get_param: 'value'},
+      dataType: 'JSON',
       success: function(tweets) {
-        if (option === 1) {
+        if (newTweet === 'newTweetYes') {
           renderTweets([tweets.pop()]);
         } else {
           renderTweets(tweets);
@@ -128,20 +148,23 @@ $(document).ready(function() {
   };
 
   /* async tweet sumbission to database and rendition on same page */
-  const updateTweetLikesArray = function incrementOrDecrementTweetLikes(event) {
-    console.log('updateTweetLikesArray invoked');
+  const updateTweetLikes = function incrementOrDecrementTweetLikesArray(event) {
+    console.log('updateTweetLikes invoked');
+    console.log('($(this).closest("article").data("tweetid")): ', ($(this).closest('article').data('tweetid')));
     event.preventDefault();
-    let tweetId = $(this).closest('article').data(tweetId);
+    // console.log('likeArrayData: ', likeArrayData);
     $.ajax({
-      method: 'POST',
-      url: '/tweets',
-      data: {id: $(this).closest('article').data('tweetId'), option: $(this).data('liked')},
-      dataType: 'json',
-      success: function(rsponse) {
-        numberOfLikes(response);
-        console.log('numberOfLikes(response): ', numberOfLikes(response));
-        heartColor((response.likes), user);
-        console.log('heartColor(response.likes, user): ', heartColor((response.likes), user));
+      url: $(this).closest('button').attr('action'),
+      method: $(this).closest('button').attr('method'),
+      contentType: 'application/json',
+      dataType: 'JSON',
+      data: {id: $(this).closest('article').data('tweetid')},
+      success: function() {
+        toggleHeartColor();
+        console.log('$(this).closest("article"): ', $(this).closest('article'));
+        console.log('');
+        // loadTweets($(this).closest('article').data('tweetid'));
+        // loadTweets(ObjectId('tweetid'));
       },
     });
   };
@@ -165,13 +188,9 @@ $(document).ready(function() {
     $(this).parent()[0].close();
   });
 
-  /* Tweet button behaviour */
-  // $('.like-tweet').on('click', updateTweetLikesArray);
-  $(document).on('click', 'button.icon.like-tweet-no, button.icon.like-tweet-yes', function(event) {
-    event.preventDefault();
-    console.log('like button clicked');
-    // return false;
-  });
+  // $(document).on('click', 'button', toggleHeartColor);
+  $(document).on('click', 'button', updateTweetLikes);
+  $(document).on('click', 'button', numberOfLikes);
 
   loadTweets();
 

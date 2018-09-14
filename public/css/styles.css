@@ -153,22 +153,21 @@ main.container {
     padding-left: 5px;
     color: #7BC3B7;
     opacity: 0; }
-  .tweet .like-tweet-yes:before {
+  .tweet .like-tweet-selected::before {
     font-family: "Font Awesome 5 Free";
     font-style: normal;
     font-weight: 900;
     content: "\f004";
     color: red;
-    text-decoration: none;
     cursor: pointer; }
-  .tweet .like-tweet-no:before {
+  .tweet .like-tweet-deselected::before {
     font-family: "Font Awesome 5 Free";
     font-style: normal;
     font-weight: 900;
     content: "\f004";
     color: #7BC3B7;
     cursor: pointer; }
-  .tweet .retweet-tweet:before {
+  .tweet .retweet-tweet::before {
     font-family: "Font Awesome 5 Free";
     font-style: normal;
     font-weight: 900;
@@ -176,7 +175,7 @@ main.container {
     color: #7BC3B7;
     text-decoration: none;
     cursor: pointer; }
-  .tweet .flag-tweet:before {
+  .tweet .flag-tweet::before {
     font-family: "Font Awesome 5 Free";
     font-style: normal;
     font-weight: 900;

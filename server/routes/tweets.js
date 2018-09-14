@@ -5,6 +5,8 @@ const userHelper = require('../lib/util/user-helper');
 const express = require('express');
 const tweetsRoutes = express.Router();
 
+// const ObjectId = require('mongodb').ObjectID;
+
 module.exports = function(DataHelpers) {
 
   tweetsRoutes.get('/', function(req, res) {
@@ -48,14 +50,28 @@ module.exports = function(DataHelpers) {
     });
   });
 
-  tweetsRoutes.put('/', function(req, res) {
-    DataHelpers.updateLikes(tweetId, user, (err, like) => {
+  // tweetsRoutes.get('/:id', function(req, res) {
+  //   let tweet = ObjectId(req.params.id);
+  //   DataHelpers.getTweet((err, tweet) => {
+  //     if (err) {
+  //       res.status(500).json({
+  //         error: err.message,
+  //       });
+  //     } else {
+  //       res.json(tweet);
+  //     }
+  //   });
+  // });
+
+  tweetsRoutes.post('/:id/:user', function(req, res) {
+    DataHelpers.updateLikes(req.params.id, req.params.user, (err, likes) => {
       if (err) {
         res.status(500).json({
           error: err.message,
         });
       } else {
-        res.status(201).json(like);
+        res.status(201).send();
+        return;
       }
     });
   });
