@@ -17,8 +17,9 @@ const {MongoClient} = require('mongodb');
 const MONGODB_URI = 'mongodb://localhost:27017/tweeter';
 
 MongoClient.connect(
-  MONGODB_URI,
-  (err, db) => {
+  MONGODB_URI, {useNewUrlParser: true},
+  (err, client) => {
+    const db = client.db('tweeter');
     if (err) {
       console.error(`Failed to connect: ${MONGODB_URI}`);
       throw err;

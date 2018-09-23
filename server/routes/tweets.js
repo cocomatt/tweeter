@@ -5,8 +5,6 @@ const userHelper = require('../lib/util/user-helper');
 const express = require('express');
 const tweetsRoutes = express.Router();
 
-// const ObjectId = require('mongodb').ObjectID;
-
 module.exports = function(DataHelpers) {
 
   tweetsRoutes.get('/', function(req, res) {
@@ -37,6 +35,7 @@ module.exports = function(DataHelpers) {
       },
       created_at: Date.now(),
       likes: [],
+      likes_count: 0,
     };
 
     DataHelpers.saveTweet(tweet, (err) => {
@@ -50,32 +49,17 @@ module.exports = function(DataHelpers) {
     });
   });
 
-  // tweetsRoutes.get('/:id', function(req, res) {
-  //   let tweet = ObjectId(req.params.id);
-  //   DataHelpers.getTweet((err, tweet) => {
-  //     if (err) {
-  //       res.status(500).json({
-  //         error: err.message,
-  //       });
-  //     } else {
-  //       res.json(tweet);
-  //     }
-  //   });
-  // });
-
-  tweetsRoutes.post('/:id/:user', function(req, res) {
-    DataHelpers.updateLikes(req.params.id, req.params.user, (err, likes) => {
+  tweetsRoutes.post('/:id/:user/:likeaction', function(req, res) {
+    DataHelpers.updateTweetLikesPushorPullUserHandle(req.params.id, req.params.user, req.params.likeaction, (err, likes) => {
       if (err) {
         res.status(500).json({
           error: err.message,
         });
       } else {
-        res.status(201).send();
-        return;
+        res.send(likes);
       }
     });
   });
 
   return tweetsRoutes;
-
 };

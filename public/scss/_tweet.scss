@@ -63,10 +63,20 @@
     margin-left: 10px;
   }
 
-  .tweet-likes {
+  .tweet-likes-container {
     display: inline-block;
     width: 100px;
+  }
+
+  .tweet-likes {
+    display: inline-block;
     font-size: 0.9em;
+  }
+
+  .tweet-likes-suffix {
+    display: inline-block;
+    font-size: 0.9em;
+    margin-left: 0.2em;
   }
 
   .icons {
