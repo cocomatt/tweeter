@@ -7,15 +7,15 @@
 
 $(document).ready(function() {
 
-  const user = '@FrogLife';
+  // const user = '@FrogLife';
+  const user = '@PigLife88';
 
   /* Tweet creation */
   const createTweetElement = function createTweetElementFromTweetsDatabase(tweet) {
 
-    // header section
+    /* header section */
     let $header = $('<header></header>');
-    let $avatar = $('<img>').addClass('avatar');
-    $avatar.attr({
+    let $avatar = $('<img>').addClass('avatar').attr({
       src: tweet.user.avatars.small,
       alt: 'profile picture',
     });
@@ -23,16 +23,18 @@ $(document).ready(function() {
     let $handle = $('<h2></h2>').addClass('handle').text(tweet.user.handle);
     $header.append($avatar, $name, $handle);
 
-    // body section
+    /* body section */
     let $tweetBody = $('<section></section>').addClass('tweet-body');
     let $tweetText = $('<p></p>').addClass('tweet-text').text(tweet.content.text);
     $tweetBody.append($tweetText);
 
-    // footer section
+    /* footer section */
     let $footer = $('<footer></footer>');
     let $date = $('<p></p>').addClass('tweet-date').text(timeSince(tweet.created_at));
-    let $tweetLikesContainer = $('<div></div>').addClass('tweet-likes-container').attr({
-      id: 'counter-likes-container',
+
+    /* footer likes container */
+    let $likesContainer = $('<div></div>').addClass('tweet-likes-container').attr({
+      id: `likes-counter-container-${tweet._id}`,
     });
     let $likes = $('<p></p>').addClass('tweet-likes').text(tweet.likes_count).attr({
       id: 'counter-likes',
@@ -41,8 +43,12 @@ $(document).ready(function() {
     let $likesSuffix = $('<p></p>').addClass('tweet-likes-suffix').text(showNumberOfTweetLikes(tweet.likes_count)).attr({
       id: 'counter-likes-suffix',
     });
-    $tweetLikesContainer.append($likes, $likesSuffix);
-    let $icons = $('<div></div>').addClass('icons');
+    $likesContainer.append($likes, $likesSuffix);
+
+    /* footer icons container */
+    let $iconsContainer = $('<div></div>').addClass('icons').attr({
+      id: `icons-container-${tweet._id}`,
+    });
     let likeUnlikeURL = (tweet, function(url, idx) {
       if ((tweet.likes).indexOf(user) > -1) {
         return `/tweets/${tweet._id}/${user}/unlike`;
@@ -50,24 +56,24 @@ $(document).ready(function() {
       return `/tweets/${tweet._id}/${user}/like`;
     });
     let $heart = $('<button></button>').addClass(`icon ${showUserLikedTweets(tweet, user)}`).attr({
-      id: 'btn-heart',
+      id: `btn-heart-${tweet._id}`,
       title: 'Like',
       method: 'POST',
       action: likeUnlikeURL,
     });
     let $retweet = $('<span></span>').addClass('icon retweet-tweet').attr('href', 'javascript:void(0);');
     let $flag = $('<span></span>').addClass('icon flag-tweet').attr('href', 'javascript:void(0);');
-    $icons.append($heart);
-    $icons.append($retweet);
-    $icons.append($flag);
-    $footer.append($date, $tweetLikesContainer, $icons); // $likes,
+    $iconsContainer.append($heart, $retweet, $flag);
 
-    // entire tweet article
-    let $article = $('<article></article>').addClass('tweet');
-    $article.append($header, $tweetBody, $footer);
-    $article.attr({
+    $footer.append($date, $likesContainer, $iconsContainer);
+
+    /* entire tweet article */
+    let $article = $('<article></article>').addClass('tweet').attr({
+      id: `article-${tweet._id}`,
       'data-tweetid': tweet._id,
     });
+    $article.append($header, $tweetBody, $footer);
+    console.log($article);
     return $article;
   };
 
@@ -87,7 +93,7 @@ $(document).ready(function() {
     return 'like-tweet-deselected';
   };
 
-  /* pluralizes like if !== 1 */
+  /* pluralizes number of likes if likes !== 1 */
   const showNumberOfTweetLikes = function showsTotalNumberOfLikesAsCalculatedOnTheServer(count) {
     if (count === 1) {
       return ' like';
@@ -95,6 +101,7 @@ $(document).ready(function() {
     return ' likes';
   };
 
+  /* displays new tweet submission form */
   const composeTweet = function displaysNewTweetSubmissionForm() {
     $('.new-tweet').slideToggle();
     $('.new-tweet textarea').focus();
@@ -136,10 +143,8 @@ $(document).ready(function() {
         url: form.attr('action'),
         data: form.serialize(),
         success: function() {
-          console.log('Tweet submitted');
           loadTweets('newTweetYes');
           clearTextArea();
-          console.log('Text area cleared');
         },
       });
     }
@@ -193,6 +198,15 @@ $(document).ready(function() {
     console.log('likeOrUnlikeTweet invoked');
     let handle = $(this).closest('article').find('.handle').text();
     const errorMessages = validateLike(handle, user);
+    let articleId = ($(this).closest('article').attr('id'));
+    let likesCounterContainerId = ($(this).closest('article').find('.tweet-likes-container').attr('id'));
+    let iconContainerId = ($(this).closest('article').find('.icons').attr('id'));
+    let heartButtonElement = $('[id^=btn-heart-]');
+    let btnHeartId = ($(this).closest('article').find(heartButtonElement).attr('id'));
+    console.log('articleId: ', articleId);
+    console.log('likesCounterContainerId: ', likesCounterContainerId);
+    console.log('iconContainerId', iconContainerId);
+    console.log('btnHeartId: ', btnHeartId);
     if (errorMessages.length) {
       renderFlashMessage(errorMessages);
     } else {
@@ -200,28 +214,30 @@ $(document).ready(function() {
         url: $(this).closest('button').attr('action'),
         method: $(this).closest('button').attr('method'),
         contentType: 'application/json',
+        cache: false,
         dataType: 'JSON',
-        data: {id: $(this).closest('#counter-likes[data-likestotal]').data('likestotal')},
+        data: {id: $(this).closest('#counter-likes').data('likestotal')},
         success: function(data) {
-          toggleHeartColor(event, data);
+          toggleHeartColor(event);
+          window.location.reload(true);
+          // $('btnHeartId').remove();
         },
       });
     };
   };
 
   /* Liking a tweet turns heart red and increments like counter and vice versa */
-  const toggleHeartColor = function changesColorOfHeartDependingOnPreviousColor(event, data) {
+  const toggleHeartColor = function changesColorOfHeartDependingOnPreviousColorAndUpdatesLikesCounter(event) {
     console.log('toggleHeartColor invoked');
     $(event.target).toggleClass('like-tweet-selected like-tweet-deselected');
     let totalLikes = $(event.target).closest('article').find('#counter-likes').data('likestotal');
-    if ($(event.target).closest('article').find('#btn-heart').hasClass('like-tweet-selected')) {
+    let heartButtonElement = $('[id^=btn-heart-]');
+    if ($(event.target).closest('article').find(heartButtonElement).hasClass('like-tweet-selected')) {
       totalLikes++;
-      // likeaction = 'like';
       $(event.target).closest('article').find('#counter-likes').empty().append(totalLikes);
       $(event.target).closest('article').find('#counter-likes-suffix').empty().append(showNumberOfTweetLikes(totalLikes));
-    } else if ($(event.target).closest('article').find('#btn-heart').hasClass('like-tweet-deselected')) {
+    } else if ($(event.target).closest('article').find(heartButtonElement).hasClass('like-tweet-deselected')) {
       totalLikes--;
-      // likeaction = 'unlike';
       $(event.target).closest('article').find('#counter-likes').empty().append(totalLikes);
       $(event.target).closest('article').find('#counter-likes-suffix').empty().append(showNumberOfTweetLikes(totalLikes));
     }
@@ -240,7 +256,8 @@ $(document).ready(function() {
   $('dialog').on('click', '.close', closeFlashMessage);
 
   /* Like button behaviour */
-  $(document).on('click', '#btn-heart', likeOrUnlikeTweet);
+  // $('#tweets-container').on('click', '#btn-heart', likeOrUnlikeTweet);
+  $('#tweets-container').on('click', '.like-tweet-selected, .like-tweet-deselected', likeOrUnlikeTweet);
 
   loadTweets();
 
