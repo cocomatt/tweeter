@@ -37,11 +37,11 @@ $(document).ready(function() {
       id: `likes-counter-container-${tweet._id}`,
     });
     let $likes = $('<p></p>').addClass('tweet-likes').text(tweet.likes_count).attr({
-      id: `counter-likes-${tweet._id}`,
+      id: `likes-counter-${tweet._id}`,
       'data-likestotal': `${tweet.likes_count}`,
     });
     let $likesSuffix = $('<p></p>').addClass('tweet-likes-suffix').text(showNumberOfTweetLikes(tweet.likes_count)).attr({
-      id: `counter-likes-suffix-${tweet._id}`,
+      id: `likes-counter-suffix-${tweet._id}`,
     });
     $likesContainer.append($likes, $likesSuffix);
 
@@ -209,9 +209,11 @@ $(document).ready(function() {
       $.ajax({
         url: $(this).closest('button').attr('action'),
         method: $(this).closest('button').attr('method'),
+        dataType: 'json',
         success: function(result) {
-          let new_likes_count = result.value.likes_count;
-          toggleHeartColor(event, articleDataId, new_likes_count);
+          toggleHeartColor(event, articleDataId);
+          $(`#likes-counter-${articleDataId}`).html(result.value.likes_count);
+          $(`#likes-counter-suffix-${articleDataId}`).html(showNumberOfTweetLikes(result.value.likes_count));
         },
       });
     };
@@ -219,22 +221,16 @@ $(document).ready(function() {
 
   /* Liking a tweet turns heart red and increments likes counter */
   /* Unliking a tweet turns heart back to default color and decrements likes counter */
-  const toggleHeartColor = function changesColorOfHeartDependingOnPreviousColorAndUpdatesLikesCounter(event, articleDataId, new_likes_count) {
+  const toggleHeartColor = function changesColorOfHeartDependingOnPreviousColorAndUpdatesLikesCounter(event, articleDataId) {
     console.log('toggleHeartColor invoked');
     $(event.target).toggleClass('like-tweet-selected like-tweet-not-selected');
     let heartButtonElement = $('[id^=btn-heart-]');
     if ($(event.target).closest('article').find(heartButtonElement).hasClass('like-tweet-selected')) {
-      console.log($(event.target).closest('article').find('#counter-likes'));
-      $(event.target).closest('article').find('#counter-likes').empty(); // .append(new_likes_count);
-      $(event.target).closest('article').find('#counter-likes-suffix').empty().append(showNumberOfTweetLikes(new_likes_count));
       $(event.target).closest('article').find('.like-tweet-selected').removeAttr('title action').attr({
         title: 'Unlike',
         action: `/tweets/${articleDataId}/${user}/unlike`,
       });
     } else if ($(event.target).closest('article').find(heartButtonElement).hasClass('like-tweet-not-selected')) {
-      console.log($(event.target).closest('article').find('#counter-likes'));
-      $(event.target).closest('article').find('#counter-likes').empty(); // .append(new_likes_count);
-      $(event.target).closest('article').find('#counter-likes-suffix').empty().append(showNumberOfTweetLikes(new_likes_count));
       $(event.target).closest('article').find('.like-tweet-not-selected').removeAttr('title action').attr({
         title: 'Like',
         action: `/tweets/${articleDataId}/${user}/like`,
