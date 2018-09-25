@@ -56,7 +56,7 @@ module.exports = function(DataHelpers) {
           error: err.message,
         });
       } else {
-        res.send(likes);
+        res.json(likes);
       }
     });
   });

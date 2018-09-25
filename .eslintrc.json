@@ -5,7 +5,7 @@
     "jquery": true
   },
   "rules": {
-    "max-len": [1, 150, 2],
+    "max-len": [1, 210, 2],
     "no-undef": "off",
 		"no-unused-vars": "off"
   },

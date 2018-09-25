@@ -166,7 +166,7 @@ main.container {
     content: "\f004";
     color: red;
     cursor: pointer; }
-  .tweet .like-tweet-deselected::before {
+  .tweet .like-tweet-not-selected::before {
     font-family: "Font Awesome 5 Free";
     font-style: normal;
     font-weight: 900;

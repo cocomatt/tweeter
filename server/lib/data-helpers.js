@@ -28,23 +28,27 @@ module.exports = function makeDataHelpers(db) {
 
     updateTweetLikesPushorPullUserHandle: function(tweetId, user, likeaction, callback) {
       if (likeaction === 'like') {
-        db.collection('tweets').updateOne(
+        db.collection('tweets').findOneAndUpdate(
           { _id: ObjectId(tweetId) },
           { $inc: { likes_count: 1 }, $push: { likes: user } },
+          { returnOriginal: false },
           (err, res) => {
             if (err) {
               return callback(err);
             }
+            console.log('updateTweetLikesPushorPullUserHandle inc: ', res);
             callback(null, res);
           });
       } else if (likeaction === 'unlike') {
-        db.collection('tweets').updateOne(
+        db.collection('tweets').findOneAndUpdate(
           { _id: ObjectId(tweetId) },
           { $inc: { likes_count: -1 }, $pull: { likes: user } },
+          { returnOriginal: false },
           (err, res) => {
             if (err) {
               return callback(err);
             }
+            console.log('updateTweetLikesPushorPullUserHandle dec: ', res);
             callback(null, res);
           });
       }
