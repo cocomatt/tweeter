@@ -14,7 +14,7 @@ module.exports = function(DataHelpers) {
           error: err.message,
         });
       } else {
-        res.json(tweets);
+        res.status(200).json(tweets);
       }
     });
   });
@@ -56,7 +56,7 @@ module.exports = function(DataHelpers) {
           error: err.message,
         });
       } else {
-        res.json(likes);
+        res.status(200).json(likes);
       }
     });
   });

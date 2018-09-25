@@ -10,6 +10,24 @@ $(document).ready(function() {
   // const user = '@FrogLife';
   const user = '@PigLife88';
 
+  const ajaxErrors = function ajaxErrorHandler(jqXHR, exception) {
+    if (jqXHR.status === 0) {
+      alert('Not connected.\n Verify Network.');
+    } else if (jqXHR.status === 404) {
+      alert('Requested page not found. [404]');
+    } else if (jqXHR.status === 500) {
+      alert('Internal Server Error [500].');
+    } else if (exception === 'parsererror') {
+      alert('Requested JSON parse failed.');
+    } else if (exception === 'timeout') {
+      alert('Time out error.');
+    } else if (exception === 'abort') {
+      alert('Ajax request aborted.');
+    } else {
+      alert('Uncaught Error.\n' + jqXHR.responseText);
+    }
+  };
+
   /* Tweet creation */
   const createTweetElement = function createTweetElementFromTweetsDatabase(tweet) {
 
@@ -142,18 +160,17 @@ $(document).ready(function() {
       renderFlashMessage(errorMessages);
     } else {
       let form = $(this);
-      console.log('form: ', form);
       $.ajax({
         method: 'POST',
         url: form.attr('action'),
         data: form.serialize(),
+        error: ajaxErrors,
         success: function() {
           loadTweets('newTweetYes');
           clearTextArea();
         },
       });
     }
-    return false;
   };
 
   /* Flash message rendition */
@@ -174,8 +191,8 @@ $(document).ready(function() {
     $.ajax({
       url: '/tweets',
       method: 'GET',
-      data: {get_param: 'value'},
       dataType: 'JSON',
+      error: ajaxErrors,
       success: function(tweets) {
         if (newTweet === 'newTweetYes') {
           renderTweets([tweets.pop()]);
@@ -210,6 +227,7 @@ $(document).ready(function() {
         url: $(this).closest('button').attr('action'),
         method: $(this).closest('button').attr('method'),
         dataType: 'json',
+        error: ajaxErrors,
         success: function(result) {
           toggleHeartColor(event, articleDataId);
           $(`#likes-counter-${articleDataId}`).html(result.value.likes_count);
