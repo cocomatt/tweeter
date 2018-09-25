@@ -1,5 +1,5 @@
 .new-tweet {
-  margin-top: 40px;
+  margin-top: 20px;
   background-color: #ececec;
   border-color: #bdbdbd;
   border-radius: 5px;
@@ -8,10 +8,16 @@
   display: flex;
   flex-direction: column;
   padding: 0.5em;
+  width: 310px;
+  margin-left: 5px;
+  margin-right: 5px;
 
   h2 {
     border-bottom: solid #4a4747 2.2px;
     margin-top: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 290px;
   }
 
   input {
@@ -19,12 +25,16 @@
   }
 
   textarea {
-    width: 368px;
-    padding: 0.3em;
+    width: 290px;
+    height: 80px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 7px;
   }
 
   .counter {
     float: right;
+    padding-right: 2px;
   }
 
   .counter-red {
