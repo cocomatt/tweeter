@@ -1,10 +1,12 @@
 'use strict';
 
-// Basic express setup:
+require('dotenv').config();
 
 const PORT = 8080;
 const express = require('express');
 const bodyParser = require('body-parser');
+const bcrypt = require('bcryptjs');
+const cookieSession = require('cookie-session');
 const methodOverride = require('method-override');
 
 const app = express();
@@ -12,6 +14,11 @@ const app = express();
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('public'));
 app.use(methodOverride('_method'));
+app.use(cookieSession({
+  name: 'session',
+  keys: [process.env.SECRETKEY],
+  maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+}));
 
 const {MongoClient} = require('mongodb');
 const MONGODB_URI = 'mongodb://localhost:27017/tweeter';
