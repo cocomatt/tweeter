@@ -39,7 +39,7 @@ $(document).ready(function() {
     });
     let $name = $('<h1></h1>').addClass('name').text(tweet.user.name);
     let $handle = $('<h2></h2>').addClass('handle').text(tweet.user.handle);
-    $header.append($avatar, $name, $handle);
+    $header.append($avatar, $name, $handle).addClass('tweet-header');
 
     /* body section */
     let $tweetBody = $('<section></section>').addClass('tweet-body');
@@ -47,7 +47,7 @@ $(document).ready(function() {
     $tweetBody.append($tweetText);
 
     /* footer section */
-    let $footer = $('<footer></footer>');
+    let $footer = $('<footer></footer>').addClass('tweet-footer');
     let $date = $('<p></p>').addClass('tweet-date').text(timeSince(tweet.created_at));
 
     /* footer likes container */

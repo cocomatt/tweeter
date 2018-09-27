@@ -1,5 +1,4 @@
-$break-small: 320px;
-$break-large: 450px;
+$break: 450px;
 
 .tweet {
   background-color: white;
@@ -8,20 +7,24 @@ $break-large: 450px;
   border-style: solid;
   border-width: 1px;
   margin-top: 30px;
-  padding: 0;
-  width: 310px;
+  width: 90%;
   margin-left: auto;
   margin-right: auto;
+  @media (min-width: $break) {
+    width: 358px;
+  }
 
-  header {
+  .tweet-header {
     background-color: rgba(160, 160, 160, 0.13);
     border-top: solid #bdbdbd 0px;
     border-radius: 5px;
     display: inline-flex;
     justify-content: space-between;
-    width: 310px;
+    width: 100%;
     height: 60px;
-  }
+    @media (min-width: $break) {
+      height: 70px;
+    }
 
     .avatar {
       background-color: cyan;
@@ -32,6 +35,13 @@ $break-large: 450px;
       margin-right: 4px;
       height: 52px;
       width: 52px;
+      @media (min-width: $break) {
+        height: 55px;
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-top: 7px;
+        width: 55px;
+      }
     }
 
     .name {
@@ -41,6 +51,12 @@ $break-large: 450px;
       margin-top: 4px;
       padding-right: 10px;
       width: 180px;
+      @media (min-width: $break) {
+        font-size: 1.5em;
+        margin-top: 10px;
+        padding-right: 40px;
+        width: 230px;
+      }
     }
 
     .handle {
@@ -50,38 +66,62 @@ $break-large: 450px;
       font-weight: 100;
       margin-right: 7px;
       margin-top: 10px;
+      @media (min-width: $break) {
+        margin-right: 10px;
+        margin-top: 15px;
+      }
     }
+  }
+
+  .tweet-body {
+    width: 100%;
 
     .tweet-text {
-      font-size: 1.2em;
       margin-left: 5px;
       margin-right: 5px;
       margin-top: 15px;
       margin-bottom: 15px;
+      font-size: 1.0em;
+      @media (min-width: $break) {
+        margin-left: 10px;
+        margin-right: 10px;
+        font-size: 1.2em;
+      }
     }
+  }
 
-  footer {
+  .tweet-footer {
     border-top: solid 1px rgba(128, 128, 128, 0.32);
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-  }
+    width: 100%;
+    line-height: 0.1em;
+    @media (min-width: $break) {
+      flex-wrap: nowrap;
+      line-height: 1em;
+      margin-top: 10px;
+    }
 
     .tweet-date {
       order: 1;
       width: 49%;
       margin-left: 6px;
       font-size: 0.9em;
-      line-height: 0.1em;
+      @media (min-width: $break) {
+        margin-left: 10px;
+        width: 30%;
+      }
     }
 
     .tweet-likes-container {
       order: 3;
       margin-left: 5px;
-      margin-right: 8px;
       width: 98%;
-      text-align: right;
-      line-height: 0.1em;
+      @media (min-width: $break) {
+        order: 2;
+        width: 30%;
+      }
     }
 
     .tweet-likes {
@@ -98,17 +138,24 @@ $break-large: 450px;
     .icons {
       order: 2;
       display: inline-block;
-      width: 49%;
-      line-height: 0.1em;
+      width: 47%;
+      @media (min-width: $break) {
+        order: 3;
+        margin-right: 5px;
+        width: 40%;
+      }
     }
 
     .icon {
       float: right;
-      margin-top: 15px;
+      margin-top: 30px;
       margin-left: 10px;
       padding-left: 5px;
       color: #7BC3B7;
       opacity: 0;
+      @media (min-width: $break) {
+        margin-top: 10px;
+      }
     }
 
     .like-tweet-selected::before {
@@ -157,12 +204,13 @@ $break-large: 450px;
     button:focus {
       outline: none;
     }
+  }
 
-      &:hover {
-        border: solid gray 2px;
-      }
+  &:hover {
+    border: solid gray 2px;
+  }
 
-      &:hover .icon {
-        opacity: 1;
-      }
+  &:hover .icon {
+    opacity: 1;
+  }
 }

@@ -1,4 +1,7 @@
-#nav-bar {
+$break: 450px;
+$break-nav-bar: 500px;
+
+.nav-bar {
   position: fixed;
   z-index: 1;
   top: 0;
@@ -8,34 +11,64 @@
   color: #e8fdff;
   padding-left: 0.5em;
   padding-right: 0.5em;
-
- .logo {
-    float: left;
-    height: 60px;
-    width: 60px;
+  @media (min-width: $break) {
+    padding-left: 2em;
+    padding-right: 2em;
+  }
+  @media (min-width: $break-nav-bar) {
+    padding-left: 0em;
+    padding-right: 0em;
   }
 
-  .header {
-    float: left;
-    font-size: 150%;
-    line-height: 2.5;
-    padding-left: 10px;
-  }
+  .nav-bar-container {
+    width: 100%;
+    @media (min-width: $break-nav-bar) {
+      width: 450px;
+      margin-left: auto;
+      margin-right: auto;
+    }
 
-  .compose {
-    float: right;
-    margin: 10px;
-    height: 60px;
-    width: 130px;
-    border: 1px black;
-    border-radius: 8px;
-    background-color: #E8FDFF;
-    font-size: 1.4em;
-    font-weight: lighter;
-    color: #00A087;
-  }
+    .logo {
+      float: left;
+      height: 60px;
+      width: 60px;
+      margin-top: 10px;
+      @media (min-width: $break) {
+        height: 80px;
+        width: 80px;
+        margin-top: 0px;
+      }
+    }
 
-  .compose:hover {
-    background-color: white;
+    .header {
+      float: left;
+      font-size: 160%;
+      padding-left: 10px;
+      margin-top: 15px;
+      @media (min-width: $break) {
+        font-size: 250%;
+        margin-top: 5px;
+      }
+    }
+
+    .compose {
+      float: right;
+      margin: 10px;
+      height: 60px;
+      width: 130px;
+      border: 1px black;
+      border-radius: 8px;
+      background-color: #E8FDFF;
+      font-size: 1.4em;
+      font-weight: lighter;
+      color: #00A087;
+      @media(min-width: $break) {
+        margin-right: 0px;
+      }
+    }
+
+    .compose:hover {
+      background-color: white;
+    }
   }
 }

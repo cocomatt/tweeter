@@ -23,17 +23,17 @@ body {
  * Additional CSS can be defined below or in other CSS files, as per instructions
  */
 main.container {
-  width: 320px;
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 10px;
-  padding-left: 0em;
-  padding-right: 0em;
   padding-top: 4em;
-  padding-bottom: 4em;
+  padding-bottom: 2em;
   background-color: white; }
+  @media (min-width: 450px) {
+    main.container {
+      width: 450px; } }
 
-#nav-bar {
+.nav-bar {
   position: fixed;
   z-index: 1;
   top: 0;
@@ -43,28 +43,56 @@ main.container {
   color: #e8fdff;
   padding-left: 0.5em;
   padding-right: 0.5em; }
-  #nav-bar .logo {
-    float: left;
-    height: 60px;
-    width: 60px; }
-  #nav-bar .header {
-    float: left;
-    font-size: 150%;
-    line-height: 2.5;
-    padding-left: 10px; }
-  #nav-bar .compose {
-    float: right;
-    margin: 10px;
-    height: 60px;
-    width: 130px;
-    border: 1px black;
-    border-radius: 8px;
-    background-color: #E8FDFF;
-    font-size: 1.4em;
-    font-weight: lighter;
-    color: #00A087; }
-  #nav-bar .compose:hover {
-    background-color: white; }
+  @media (min-width: 450px) {
+    .nav-bar {
+      padding-left: 2em;
+      padding-right: 2em; } }
+  @media (min-width: 500px) {
+    .nav-bar {
+      padding-left: 0em;
+      padding-right: 0em; } }
+  .nav-bar .nav-bar-container {
+    width: 100%; }
+    @media (min-width: 500px) {
+      .nav-bar .nav-bar-container {
+        width: 450px;
+        margin-left: auto;
+        margin-right: auto; } }
+    .nav-bar .nav-bar-container .logo {
+      float: left;
+      height: 60px;
+      width: 60px;
+      margin-top: 10px; }
+      @media (min-width: 450px) {
+        .nav-bar .nav-bar-container .logo {
+          height: 80px;
+          width: 80px;
+          margin-top: 0px; } }
+    .nav-bar .nav-bar-container .header {
+      float: left;
+      font-size: 160%;
+      padding-left: 10px;
+      margin-top: 15px; }
+      @media (min-width: 450px) {
+        .nav-bar .nav-bar-container .header {
+          font-size: 250%;
+          margin-top: 5px; } }
+    .nav-bar .nav-bar-container .compose {
+      float: right;
+      margin: 10px;
+      height: 60px;
+      width: 130px;
+      border: 1px black;
+      border-radius: 8px;
+      background-color: #E8FDFF;
+      font-size: 1.4em;
+      font-weight: lighter;
+      color: #00A087; }
+      @media (min-width: 450px) {
+        .nav-bar .nav-bar-container .compose {
+          margin-right: 0px; } }
+    .nav-bar .nav-bar-container .compose:hover {
+      background-color: white; }
 
 .new-tweet {
   margin-top: 20px;
@@ -76,19 +104,23 @@ main.container {
   display: flex;
   flex-direction: column;
   padding: 0.5em;
-  width: 310px;
-  margin-left: 5px;
-  margin-right: 5px; }
+  width: 90%;
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto; }
+  @media (min-width: 450px) {
+    .new-tweet {
+      width: 358px; } }
   .new-tweet h2 {
     border-bottom: solid #4a4747 2.2px;
     margin-top: 0;
     margin-left: auto;
     margin-right: auto;
-    width: 290px; }
+    width: 100%; }
   .new-tweet input {
     float: left; }
   .new-tweet textarea {
-    width: 290px;
+    width: 100%;
     height: 80px;
     margin-left: auto;
     margin-right: auto;
@@ -106,119 +138,166 @@ main.container {
   border-style: solid;
   border-width: 1px;
   margin-top: 30px;
-  padding: 0;
-  width: 310px;
+  width: 90%;
   margin-left: auto;
   margin-right: auto; }
-  .tweet header {
+  @media (min-width: 450px) {
+    .tweet {
+      width: 358px; } }
+  .tweet .tweet-header {
     background-color: rgba(160, 160, 160, 0.13);
     border-top: solid #bdbdbd 0px;
     border-radius: 5px;
     display: inline-flex;
     justify-content: space-between;
-    width: 310px;
+    width: 100%;
     height: 60px; }
-  .tweet .avatar {
-    background-color: cyan;
-    border-radius: 5px;
-    border-width: 1px;
-    margin-left: 4px;
-    margin-top: 4px;
-    margin-right: 4px;
-    height: 52px;
-    width: 52px; }
-  .tweet .name {
-    color: #6b6c6f;
-    font-size: 1.3em;
-    margin-left: 4px;
-    margin-top: 4px;
-    padding-right: 10px;
-    width: 180px; }
-  .tweet .handle {
-    color: rgba(130, 130, 130, 0.63);
-    float: right;
-    font-size: 1.0em;
-    font-weight: 100;
-    margin-right: 7px;
-    margin-top: 10px; }
-  .tweet .tweet-text {
-    font-size: 1.2em;
-    margin-left: 5px;
-    margin-right: 5px;
-    margin-top: 15px;
-    margin-bottom: 15px; }
-  .tweet footer {
+    @media (min-width: 450px) {
+      .tweet .tweet-header {
+        height: 70px; } }
+    .tweet .tweet-header .avatar {
+      background-color: cyan;
+      border-radius: 5px;
+      border-width: 1px;
+      margin-left: 4px;
+      margin-top: 4px;
+      margin-right: 4px;
+      height: 52px;
+      width: 52px; }
+      @media (min-width: 450px) {
+        .tweet .tweet-header .avatar {
+          height: 55px;
+          margin-left: 10px;
+          margin-right: 10px;
+          margin-top: 7px;
+          width: 55px; } }
+    .tweet .tweet-header .name {
+      color: #6b6c6f;
+      font-size: 1.3em;
+      margin-left: 4px;
+      margin-top: 4px;
+      padding-right: 10px;
+      width: 180px; }
+      @media (min-width: 450px) {
+        .tweet .tweet-header .name {
+          font-size: 1.5em;
+          margin-top: 10px;
+          padding-right: 40px;
+          width: 230px; } }
+    .tweet .tweet-header .handle {
+      color: rgba(130, 130, 130, 0.63);
+      float: right;
+      font-size: 1.0em;
+      font-weight: 100;
+      margin-right: 7px;
+      margin-top: 10px; }
+      @media (min-width: 450px) {
+        .tweet .tweet-header .handle {
+          margin-right: 10px;
+          margin-top: 15px; } }
+  .tweet .tweet-body {
+    width: 100%; }
+    .tweet .tweet-body .tweet-text {
+      margin-left: 5px;
+      margin-right: 5px;
+      margin-top: 15px;
+      margin-bottom: 15px;
+      font-size: 1.0em; }
+      @media (min-width: 450px) {
+        .tweet .tweet-body .tweet-text {
+          margin-left: 10px;
+          margin-right: 10px;
+          font-size: 1.2em; } }
+  .tweet .tweet-footer {
     border-top: solid 1px rgba(128, 128, 128, 0.32);
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap; }
-  .tweet .tweet-date {
-    order: 1;
-    width: 49%;
-    margin-left: 6px;
-    font-size: 0.9em;
+    flex-wrap: wrap;
+    width: 100%;
     line-height: 0.1em; }
-  .tweet .tweet-likes-container {
-    order: 3;
-    margin-left: 5px;
-    margin-right: 8px;
-    width: 98%;
-    text-align: right;
-    line-height: 0.1em; }
-  .tweet .tweet-likes {
-    display: inline-block;
-    font-size: 0.9em; }
-  .tweet .tweet-likes-suffix {
-    display: inline-block;
-    font-size: 0.9em;
-    margin-left: 0.2em; }
-  .tweet .icons {
-    order: 2;
-    display: inline-block;
-    width: 49%;
-    line-height: 0.1em; }
-  .tweet .icon {
-    float: right;
-    margin-top: 15px;
-    margin-left: 10px;
-    padding-left: 5px;
-    color: #7BC3B7;
-    opacity: 0; }
-  .tweet .like-tweet-selected::before {
-    font-family: "Font Awesome 5 Free";
-    font-style: normal;
-    font-weight: 900;
-    content: "\f004";
-    color: red;
-    cursor: pointer; }
-  .tweet .like-tweet-not-selected::before {
-    font-family: "Font Awesome 5 Free";
-    font-style: normal;
-    font-weight: 900;
-    content: "\f004";
-    color: #7BC3B7;
-    cursor: pointer; }
-  .tweet .retweet-tweet::before {
-    font-family: "Font Awesome 5 Free";
-    font-style: normal;
-    font-weight: 900;
-    content: "\f079";
-    color: #7BC3B7;
-    text-decoration: none;
-    cursor: pointer; }
-  .tweet .flag-tweet::before {
-    font-family: "Font Awesome 5 Free";
-    font-style: normal;
-    font-weight: 900;
-    content: "\f024";
-    color: #7BC3B7;
-    text-decoration: none;
-    cursor: pointer; }
-  .tweet button {
-    background-color: transparent;
-    border: 0; }
-  .tweet button:focus {
-    outline: none; }
+    @media (min-width: 450px) {
+      .tweet .tweet-footer {
+        flex-wrap: nowrap;
+        line-height: 1em;
+        margin-top: 10px; } }
+    .tweet .tweet-footer .tweet-date {
+      order: 1;
+      width: 49%;
+      margin-left: 6px;
+      font-size: 0.9em; }
+      @media (min-width: 450px) {
+        .tweet .tweet-footer .tweet-date {
+          margin-left: 10px;
+          width: 30%; } }
+    .tweet .tweet-footer .tweet-likes-container {
+      order: 3;
+      margin-left: 5px;
+      width: 98%; }
+      @media (min-width: 450px) {
+        .tweet .tweet-footer .tweet-likes-container {
+          order: 2;
+          width: 30%; } }
+    .tweet .tweet-footer .tweet-likes {
+      display: inline-block;
+      font-size: 0.9em; }
+    .tweet .tweet-footer .tweet-likes-suffix {
+      display: inline-block;
+      font-size: 0.9em;
+      margin-left: 0.2em; }
+    .tweet .tweet-footer .icons {
+      order: 2;
+      display: inline-block;
+      width: 47%; }
+      @media (min-width: 450px) {
+        .tweet .tweet-footer .icons {
+          order: 3;
+          margin-right: 5px;
+          width: 40%; } }
+    .tweet .tweet-footer .icon {
+      float: right;
+      margin-top: 30px;
+      margin-left: 10px;
+      padding-left: 5px;
+      color: #7BC3B7;
+      opacity: 0; }
+      @media (min-width: 450px) {
+        .tweet .tweet-footer .icon {
+          margin-top: 10px; } }
+    .tweet .tweet-footer .like-tweet-selected::before {
+      font-family: "Font Awesome 5 Free";
+      font-style: normal;
+      font-weight: 900;
+      content: "\f004";
+      color: red;
+      cursor: pointer; }
+    .tweet .tweet-footer .like-tweet-not-selected::before {
+      font-family: "Font Awesome 5 Free";
+      font-style: normal;
+      font-weight: 900;
+      content: "\f004";
+      color: #7BC3B7;
+      cursor: pointer; }
+    .tweet .tweet-footer .retweet-tweet::before {
+      font-family: "Font Awesome 5 Free";
+      font-style: normal;
+      font-weight: 900;
+      content: "\f079";
+      color: #7BC3B7;
+      text-decoration: none;
+      cursor: pointer; }
+    .tweet .tweet-footer .flag-tweet::before {
+      font-family: "Font Awesome 5 Free";
+      font-style: normal;
+      font-weight: 900;
+      content: "\f024";
+      color: #7BC3B7;
+      text-decoration: none;
+      cursor: pointer; }
+    .tweet .tweet-footer button {
+      background-color: transparent;
+      border: 0; }
+    .tweet .tweet-footer button:focus {
+      outline: none; }
   .tweet:hover {
     border: solid gray 2px; }
   .tweet:hover .icon {
