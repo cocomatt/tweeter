@@ -254,7 +254,7 @@ nav {
       font-size: 1.4em;
       font-weight: lighter;
       color: #00A087;
-      display: none; }
+      display: block; }
       @media (min-width: 411px) {
         nav .nav-bar-container .compose {
           margin-right: 0px; } }

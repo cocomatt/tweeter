@@ -132,7 +132,7 @@ nav {
       font-size: 1.4em;
       font-weight: lighter;
       color: #00A087;
-      display: none;
+      display: block;
       @media(min-width: $break) {
         margin-right: 0px;
       }
