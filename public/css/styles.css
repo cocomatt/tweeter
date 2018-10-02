@@ -4,15 +4,144 @@
  * https://css-tricks.com/international-box-sizing-awareness-day/
  * Do not modify these two selectors, please
  */
-html {
-  box-sizing: border-box; }
-
-*, *:before, *:after {
-  box-sizing: inherit; }
-
 /*
  * Global layout stuff
  */
+html {
+  color: #222;
+  font-size: 1em;
+  line-height: 1.4; }
+
+::-moz-selection {
+  background: #b3d4fc;
+  text-shadow: none; }
+
+::selection {
+  background: #b3d4fc;
+  text-shadow: none; }
+
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0; }
+
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+  vertical-align: middle; }
+
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0; }
+
+textarea {
+  resize: vertical; }
+
+.browserupgrade {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0; }
+
+.hidden {
+  display: none !important; }
+
+.visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap;
+  /* 1 */ }
+
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+  clip: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  position: static;
+  width: auto;
+  white-space: inherit; }
+
+.invisible {
+  visibility: hidden; }
+
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */ }
+
+.clearfix:after {
+  clear: both; }
+
+@media only screen and (min-width: 35em) {
+  /* Style adjustments for viewports that meet the condition */ }
+
+@media print, (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 1.25dppx), (min-resolution: 120dpi) {
+  /* Style adjustments for high resolution devices */ }
+
+@media print {
+  *,
+  *:before,
+  *:after {
+    background: transparent !important;
+    color: #000 !important;
+    /* Black prints faster */
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    text-shadow: none !important; }
+  a,
+  a:visited {
+    text-decoration: underline; }
+  a[href]:after {
+    content: " (" attr(href) ")"; }
+  abbr[title]:after {
+    content: " (" attr(title) ")"; }
+  /*
+   * Don't show links that are fragment identifiers,
+   * or use the `javascript:` pseudo protocol
+   */
+  a[href^="#"]:after,
+  a[href^="javascript:"]:after {
+    content: ""; }
+  pre {
+    white-space: pre-wrap !important; }
+  pre,
+  blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid; }
+  /*
+   * Printing Tables:
+   * http://css-discuss.incutio.com/wiki/Printing_Tables
+   */
+  thead {
+    display: table-header-group; }
+  tr,
+  img {
+    page-break-inside: avoid; }
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3; }
+  h2,
+  h3 {
+    page-break-after: avoid; } }
+
 body {
   font-family: 'Roboto Condensed', sans-serif;
   margin: 0;
@@ -29,57 +158,94 @@ main.container {
   padding-top: 4em;
   padding-bottom: 2em;
   background-color: white; }
-  @media (min-width: 450px) {
+  @media (min-width: 411px) {
     main.container {
       width: 450px; } }
 
-.nav-bar {
+nav {
   position: fixed;
   z-index: 1;
   top: 0;
   height: 80px;
   width: 100%;
-  background-color: #00a087;
-  color: #e8fdff;
-  padding-left: 0.5em;
-  padding-right: 0.5em; }
-  @media (min-width: 450px) {
-    .nav-bar {
-      padding-left: 2em;
-      padding-right: 2em; } }
-  @media (min-width: 500px) {
-    .nav-bar {
-      padding-left: 0em;
-      padding-right: 0em; } }
-  .nav-bar .nav-bar-container {
-    width: 100%; }
+  background-color: #00a087; }
+  nav .nav-bar-container {
+    display: flex;
+    width: 90%;
+    height: 80px;
+    margin-left: auto;
+    margin-right: auto; }
     @media (min-width: 500px) {
-      .nav-bar .nav-bar-container {
-        width: 450px;
-        margin-left: auto;
-        margin-right: auto; } }
-    .nav-bar .nav-bar-container .logo {
-      float: left;
+      nav .nav-bar-container {
+        width: 450px; } }
+    nav .nav-bar-container .logo {
       height: 60px;
       width: 60px;
-      margin-top: 10px; }
-      @media (min-width: 450px) {
-        .nav-bar .nav-bar-container .logo {
+      margin-top: 10px;
+      margin-right: auto; }
+      @media (min-width: 411px) {
+        nav .nav-bar-container .logo {
           height: 80px;
           width: 80px;
           margin-top: 0px; } }
-    .nav-bar .nav-bar-container .header {
-      float: left;
+    nav .nav-bar-container .header {
       font-size: 160%;
-      padding-left: 10px;
-      margin-top: 15px; }
-      @media (min-width: 450px) {
-        .nav-bar .nav-bar-container .header {
+      margin-top: 15px;
+      color: #e8fdff;
+      margin-left: auto;
+      margin-right: auto; }
+      @media (min-width: 411px) {
+        nav .nav-bar-container .header {
           font-size: 250%;
           margin-top: 5px; } }
-    .nav-bar .nav-bar-container .compose {
-      float: right;
-      margin: 10px;
+    nav .nav-bar-container .nav-menu {
+      font-size: 200%;
+      margin-top: 20px;
+      margin-left: auto;
+      color: black;
+      font-weight: bolder;
+      cursor: pointer; }
+    nav .nav-bar-container ul.opened {
+      top: 80px;
+      margin: 0;
+      left: 0;
+      padding: 0;
+      text-align: center;
+      border-bottom: 5px solid #00a087;
+      position: fixed;
+      background-color: white;
+      width: 100%; }
+      @media (min-width: 500px) {
+        nav .nav-bar-container ul.opened {
+          display: flex;
+          align-items: stretch;
+          justify-content: space-between; } }
+    nav .nav-bar-container ul.closed {
+      display: none; }
+    nav .nav-bar-container .nav-list-item {
+      padding-top: 20px;
+      padding-bottom: 20px;
+      border-top: 1px solid #00a087;
+      background-color: white; }
+      @media (min-width: 500px) {
+        nav .nav-bar-container .nav-list-item {
+          display: block;
+          border-top: none;
+          width: 33.33%; } }
+    nav .nav-bar-container .nav-list-item:first-child {
+      border-top: none; }
+    nav .nav-bar-container .nav-list-item:hover {
+      background-color: #e8fdff; }
+    nav .nav-bar-container .nav-list-item a {
+      text-decoration: none;
+      color: black;
+      font-size: 150%;
+      font-weight: bolder;
+      padding-left: 0;
+      padding-right: 0; }
+    nav .nav-bar-container .compose {
+      margin-top: 10px;
+      margin-bottom: 10px;
       height: 60px;
       width: 130px;
       border: 1px black;
@@ -87,11 +253,12 @@ main.container {
       background-color: #E8FDFF;
       font-size: 1.4em;
       font-weight: lighter;
-      color: #00A087; }
-      @media (min-width: 450px) {
-        .nav-bar .nav-bar-container .compose {
+      color: #00A087;
+      display: none; }
+      @media (min-width: 411px) {
+        nav .nav-bar-container .compose {
           margin-right: 0px; } }
-    .nav-bar .nav-bar-container .compose:hover {
+    nav .nav-bar-container .compose:hover {
       background-color: white; }
 
 .new-tweet {
@@ -108,7 +275,7 @@ main.container {
   margin-top: 50px;
   margin-left: auto;
   margin-right: auto; }
-  @media (min-width: 450px) {
+  @media (min-width: 410px) {
     .new-tweet {
       width: 358px; } }
   .new-tweet h2 {
@@ -141,7 +308,7 @@ main.container {
   width: 90%;
   margin-left: auto;
   margin-right: auto; }
-  @media (min-width: 450px) {
+  @media (min-width: 411px) {
     .tweet {
       width: 358px; } }
   .tweet .tweet-header {
@@ -152,7 +319,7 @@ main.container {
     justify-content: space-between;
     width: 100%;
     height: 60px; }
-    @media (min-width: 450px) {
+    @media (min-width: 411px) {
       .tweet .tweet-header {
         height: 70px; } }
     .tweet .tweet-header .avatar {
@@ -164,7 +331,7 @@ main.container {
       margin-right: 4px;
       height: 52px;
       width: 52px; }
-      @media (min-width: 450px) {
+      @media (min-width: 411px) {
         .tweet .tweet-header .avatar {
           height: 55px;
           margin-left: 10px;
@@ -178,7 +345,7 @@ main.container {
       margin-top: 4px;
       padding-right: 10px;
       width: 180px; }
-      @media (min-width: 450px) {
+      @media (min-width: 411px) {
         .tweet .tweet-header .name {
           font-size: 1.5em;
           margin-top: 10px;
@@ -191,7 +358,7 @@ main.container {
       font-weight: 100;
       margin-right: 7px;
       margin-top: 10px; }
-      @media (min-width: 450px) {
+      @media (min-width: 411px) {
         .tweet .tweet-header .handle {
           margin-right: 10px;
           margin-top: 15px; } }
@@ -203,7 +370,7 @@ main.container {
       margin-top: 15px;
       margin-bottom: 15px;
       font-size: 1.0em; }
-      @media (min-width: 450px) {
+      @media (min-width: 411px) {
         .tweet .tweet-body .tweet-text {
           margin-left: 10px;
           margin-right: 10px;
@@ -215,7 +382,7 @@ main.container {
     flex-wrap: wrap;
     width: 100%;
     line-height: 0.1em; }
-    @media (min-width: 450px) {
+    @media (min-width: 411px) {
       .tweet .tweet-footer {
         flex-wrap: nowrap;
         line-height: 1em;
@@ -225,7 +392,7 @@ main.container {
       width: 49%;
       margin-left: 6px;
       font-size: 0.9em; }
-      @media (min-width: 450px) {
+      @media (min-width: 411px) {
         .tweet .tweet-footer .tweet-date {
           margin-left: 10px;
           width: 30%; } }
@@ -233,7 +400,7 @@ main.container {
       order: 3;
       margin-left: 5px;
       width: 98%; }
-      @media (min-width: 450px) {
+      @media (min-width: 411px) {
         .tweet .tweet-footer .tweet-likes-container {
           order: 2;
           width: 30%; } }
@@ -248,7 +415,7 @@ main.container {
       order: 2;
       display: inline-block;
       width: 47%; }
-      @media (min-width: 450px) {
+      @media (min-width: 411px) {
         .tweet .tweet-footer .icons {
           order: 3;
           margin-right: 5px;
@@ -260,7 +427,7 @@ main.container {
       padding-left: 5px;
       color: #7BC3B7;
       opacity: 0; }
-      @media (min-width: 450px) {
+      @media (min-width: 411px) {
         .tweet .tweet-footer .icon {
           margin-top: 10px; } }
     .tweet .tweet-footer .like-tweet-selected::before {

@@ -4,6 +4,7 @@
 <head>
   <!-- Meta Information -->
   <title>Tweeter - Home Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- External CSS -->
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
@@ -38,11 +39,18 @@
 
   <!-- Top nav bar (fixed) -->
   <nav class="nav-bar">
-    <section class="nav-bar-container">
+    <div class="nav-bar-container">
       <img class="logo" src="/images/bird.png">
       <span class="header">Tweeter</span>
+      <span class="nav-menu">MENU</span>
+        <div class="nav-list">
+        <ul class ="closed">
+          <li class="nav-list-item"><a href="/home">Home</a></li>
+          <li class="nav-list-item"><a href="/register">Register</a></li>
+          <li class="nav-list-item"><a href="/login">Login</a></li>
+        </ul>
       <button class="compose"><i class="far fa-edit"></i>Compose</button>
-    </section>
+    </div>
   </nav>
 
   <!-- Flash Message Dialog -->

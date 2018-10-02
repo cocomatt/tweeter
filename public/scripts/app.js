@@ -12,7 +12,7 @@ $(document).ready(function() {
 
   const ajaxErrors = function ajaxErrorHandler(jqXHR, exception) {
     if (jqXHR.status === 0) {
-      alert('Not connected.\n Verify Network.');
+      alert('Not connected.\nVerify Network.');
     } else if (jqXHR.status === 404) {
       alert('Requested page not found. [404]');
     } else if (jqXHR.status === 500) {
@@ -26,6 +26,17 @@ $(document).ready(function() {
     } else {
       alert('Uncaught Error.\n' + jqXHR.responseText);
     }
+  };
+
+  const toggleNavMenu = function toggleSiteNavMenu() {
+    $('ul').toggleClass('opened closed');
+  };
+
+  /* displays new tweet submission form */
+  const composeTweet = function displaysNewTweetSubmissionForm() {
+    $('.new-tweet').slideToggle();
+    $('.new-tweet textarea').focus();
+    $('.new-tweet .counter').text(MAX_TWEET_LENGTH);
   };
 
   /* Tweet creation */
@@ -122,13 +133,6 @@ $(document).ready(function() {
       return ' like';
     }
     return ' likes';
-  };
-
-  /* displays new tweet submission form */
-  const composeTweet = function displaysNewTweetSubmissionForm() {
-    $('.new-tweet').slideToggle();
-    $('.new-tweet textarea').focus();
-    $('.new-tweet .counter').text(MAX_TWEET_LENGTH);
   };
 
   /* Tweet form validation */
@@ -256,6 +260,10 @@ $(document).ready(function() {
     }
   };
 
+  /* Hamberger menu behaviour */
+  $('.nav-menu').on('click', toggleNavMenu);
+  // $('.menu-toggle').on('click', toggleNavMenu);
+
   /* New tweet is hidden to begin with */
   $('.new-tweet').hide();
 
@@ -269,7 +277,6 @@ $(document).ready(function() {
   $('dialog').on('click', '.close', closeFlashMessage);
 
   /* Like button behaviour */
-  // $('#tweets-container').on('click', '#btn-heart', likeOrUnlikeTweet);
   $('#tweets-container').on('click', '.like-tweet-selected, .like-tweet-not-selected', likeOrUnlikeTweet);
 
   loadTweets();
