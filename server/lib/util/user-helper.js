@@ -7,6 +7,16 @@ const md5 = require('md5');
 
 module.exports = {
 
+  generateRandomAvatar: () => {
+    const avatarUrlPrefix = `https://vanillicon.com/${md5(userHandle)}`;
+    const avatars = {
+      small: `${avatarUrlPrefix}_50.png`,
+      regular: `${avatarUrlPrefix}.png`,
+      large: `${avatarUrlPrefix}_200.png`,
+    };
+    return avatars;
+  },
+
   generateRandomUser: () => {
     const gender = chance.gender();
     const firstName = chance.first({gender: gender});
