@@ -1,4 +1,4 @@
-$break: 411px;
+$minor-break: 398px;
 $break-nav-bar: 500px;
 
 nav {
@@ -24,7 +24,7 @@ nav {
       width: 60px;
       margin-top: 10px;
       margin-right: auto;
-      @media (min-width: $break) {
+      @media (min-width: $minor-break) {
         height: 80px;
         width: 80px;
         margin-top: 0px;
@@ -37,7 +37,7 @@ nav {
       color: #e8fdff;
       margin-left: auto;
       margin-right: auto;
-      @media (min-width: $break) {
+      @media (min-width: $minor-break) {
         font-size: 250%;
         margin-top: 5px;
       }
@@ -50,62 +50,11 @@ nav {
       color: black;
       font-weight: bolder;
       cursor: pointer;
-    }
-
-    ul.opened {
-      top: 80px;
-      margin: 0;
-      left: 0;
-      padding: 0;
-      text-align: center;
-      border-bottom: 5px solid #00a087;
-      position: fixed;
-      background-color: white;
-      width: 100%;
       @media (min-width: $break-nav-bar) {
-        display: flex;
-        align-items: stretch;
-        justify-content: space-between;
+        font-size: 300%;
+        margin-top: 7px;
       }
     }
-
-    ul.closed {
-      display: none;
-    }
-
-    .nav-list-item {
-      padding-top: 20px;
-      padding-bottom: 20px;
-      border-top: 1px solid #00a087;
-      background-color: white;
-      @media (min-width: $break-nav-bar) {
-        display: block;
-        border-top: none;
-        width: 33.33%
-      }
-    }
-
-    // .nav-list-item .closed {
-    //   display: none;
-    // }
-
-    .nav-list-item:first-child {
-      border-top: none;
-    }
-
-    .nav-list-item:hover {
-      background-color: #e8fdff;
-    }
-
-    .nav-list-item a {
-      text-decoration: none;
-      color: black;
-      font-size: 150%;
-      font-weight: bolder;
-      padding-left: 0;
-      padding-right: 0;
-    }
-
 
     // .menu::before {
     //   // text-align: right;
@@ -121,6 +70,56 @@ nav {
     //   font-size: 2.4em;
     // }
 
+    .nav-list-items {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      top: 80px;
+      margin: 0;
+      left: 0;
+      padding: 0;
+      border-bottom: 5px solid #00a087;
+      position: fixed;
+      background-color: white;
+      width: 100%;
+      @media (min-width: $break-nav-bar) {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+    }
+
+    li[class^='nav-list-item'] {
+      display: block;
+      top: 80px;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      border-top: 1px solid #00a087;
+      background-color: white;
+      text-decoration: none;
+      text-align: center;
+      color: black;
+      font-size: 150%;
+      font-weight: bolder;
+      padding-left: 0;
+      padding-right: 0;
+      width: 100%;
+      transition: background 250ms ease-in-out, transform 150ms ease;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      @media (min-width: $break-nav-bar) {
+        border-top: none;
+        width: 33.33%
+      }
+    }
+
+    li[class^='nav-list-item']:first-child {
+      border-top: none;
+    }
+
+    li[class^='nav-list-item']:hover {
+      background-color: #e8fdff;
+    }
+
     .compose {
       margin-top: 10px;
       margin-bottom: 10px;
@@ -132,7 +131,10 @@ nav {
       font-size: 1.4em;
       font-weight: lighter;
       color: #00A087;
-      display: block;
+      display: none;
+      transition: background 250ms ease-in-out, transform 150ms ease;
+      -webkit-appearance: none;
+      -moz-appearance: none;
       @media(min-width: $break) {
         margin-right: 0px;
       }

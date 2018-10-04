@@ -44,10 +44,10 @@
       <span class="header">Tweeter</span>
       <span class="nav-menu">MENU</span>
         <div class="nav-list">
-        <ul class ="closed">
-          <li class="nav-list-item"><a href="/home">Home</a></li>
-          <li class="nav-list-item"><a href="/register">Register</a></li>
-          <li class="nav-list-item"><a href="/login">Login</a></li>
+        <ul class="nav-list-items">
+          <li class="nav-list-item-about">About</li>
+          <li class="nav-list-item-register">Register</li>
+          <li class="nav-list-item-login">Login</li>
         </ul>
       <button class="compose"><i class="far fa-edit"></i>Compose</button>
     </div>
@@ -55,19 +55,90 @@
 
   <!-- Flash Message Dialog -->
   <dialog class="flash">
-    <h1 class="error-oops">Oops!</h1>
+    <h2 class="error-oops">Oops!</h2>
     <p class="error-messsage"></p>
-    <button class="close">Okay</button>
+    <button class="closeFlashBTN">Okay</button>
   </dialog>
 
-  <!-- Page-specific (main) content here -->
+  <!-- Page content here -->
   <main class="container">
+
+    <!-- About -->
+    <section class="box-content-about">
+      <span class="close-box">&times;</span>
+      <h1>About</h1>
+      <p>Tweeter is a simple, single-page Twitter clone.</p>
+      <h2>Tech employed:</h2>
+      <h3>Front End</h3>
+      <ul>
+        <li>HTML5</li>
+        <li>CSS3</li>
+        <li>JS/jQuery/AJAX</li>
+      </ul>
+      <h3>Back End</h3>
+      <ul>
+        <li>Node</li>
+        <li>Express</li>
+        <li>MongoDB</li>
+      </ul>
+    </section>
+
+    <!-- Register -->
+    <section class="box-content-register">
+      <span class="close-box">&times;</span>
+      <h1>Register</h1>
+      <label>Email:</label>
+      <div class='required'>
+        <input id="register-email" type="email" class="input-res">
+      </div>
+      <br>
+      <label>Pick a username (this will be your handle and it must be unique):</label>
+      <div class='required'>
+        <input id="register-handle" type="text" class="input-res">
+      </div>
+      <br>
+      <label>Enter your name (this does <i>not</i> have to be unique):</label>
+      <div class='required'>
+        <input id="register-handle" type="text" class="input-res">
+      </div>
+      <br>
+      <label>Password:</label>
+      <div class='required'>
+        <input id="register-password" type="password" class="input-res">
+      </div>
+      <br>
+      <label>Re-enter password:</label>
+      <div class='required'>
+        <input id="register-password-reenter" type="password" class="input-res">
+      </div>
+      <br>
+      <input id="register" type="submit" value="Register" class="buttonBTN">
+    </section>
+
+    <!-- Login -->
+    <section class="box-content-login">
+      <span class="close-box">&times;</span>
+      <h1>Login</h1>
+      <label>Email/Username:</label>
+      <div class='required'>
+        <input id="login-email-username" type="text" class="input-res">
+      </div>
+      <br>
+      <label>Password:</label>
+      <div class='required'>
+        <input id="login-password" type="password" class="input-res">
+      </div>
+      <br>
+      <input id="login" type="submit" value="Login" class="buttonBTN">
+    </section>
     <section class="new-tweet">
       <h2>Compose Tweet</h2>
       <form id="tweet-submission-form" action="/tweets" method="POST">
         <textarea name="text" placeholder="What are you humming about?"></textarea>
-        <input type="submit" value="Tweet">
-        <span class="counter"></span>
+        <div class="new-tweet-footer">
+          <input type="submit" value="Tweet" class="buttonTweet">
+          <span class="counter"></span>
+        </div>
       </form>
     </section>
     <section id="tweets-container">

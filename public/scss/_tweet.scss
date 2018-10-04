@@ -1,17 +1,15 @@
-$break: 411px;
+$minor-break: 398px;
 
 .tweet {
   background-color: white;
-  border-color: #bdbdbd;
-  border-radius: 5px;
-  border-style: solid;
-  border-width: 1px;
   margin-top: 30px;
-  width: 90%;
   margin-left: auto;
   margin-right: auto;
-  @media (min-width: $break) {
-    width: 358px;
+  border: 1px solid #bdbdbd;
+  border-radius: 5px;
+  width: 90%;
+  @media (min-width: $minor-break) {
+    width: 360px;
   }
 
   .tweet-header {
@@ -22,7 +20,7 @@ $break: 411px;
     justify-content: space-between;
     width: 100%;
     height: 60px;
-    @media (min-width: $break) {
+    @media (min-width: $minor-break) {
       height: 70px;
     }
 
@@ -35,7 +33,7 @@ $break: 411px;
       margin-right: 4px;
       height: 52px;
       width: 52px;
-      @media (min-width: $break) {
+      @media (min-width: $minor-break) {
         height: 55px;
         margin-left: 10px;
         margin-right: 10px;
@@ -46,13 +44,13 @@ $break: 411px;
 
     .name {
       color: #6b6c6f;
-      font-size: 1.3em;
+      font-size: 130%;
       margin-left: 4px;
       margin-top: 4px;
       padding-right: 10px;
       width: 180px;
-      @media (min-width: $break) {
-        font-size: 1.5em;
+      @media (min-width: $minor-break) {
+        font-size: 150%;
         margin-top: 10px;
         padding-right: 40px;
         width: 230px;
@@ -62,13 +60,14 @@ $break: 411px;
     .handle {
       color: rgba(130, 130, 130, 0.63);
       float: right;
-      font-size: 1.0em;
       font-weight: 100;
       margin-right: 7px;
       margin-top: 10px;
-      @media (min-width: $break) {
+      font-size: 100%;
+      @media (min-width: $minor-break) {
         margin-right: 10px;
         margin-top: 15px;
+        font-size: 120%;
       }
     }
   }
@@ -81,11 +80,11 @@ $break: 411px;
       margin-right: 5px;
       margin-top: 15px;
       margin-bottom: 15px;
-      font-size: 1.0em;
-      @media (min-width: $break) {
+      font-size: 100%;
+      @media (min-width: $minor-break) {
         margin-left: 10px;
         margin-right: 10px;
-        font-size: 1.2em;
+        font-size: 130%;
       }
     }
   }
@@ -96,65 +95,76 @@ $break: 411px;
     flex-direction: row;
     flex-wrap: wrap;
     width: 100%;
-    line-height: 0.1em;
-    @media (min-width: $break) {
+    @media (min-width: $minor-break) {
       flex-wrap: nowrap;
-      line-height: 1em;
-      margin-top: 10px;
+      padding-top: 10px;
+      padding-bottom: 5px;
     }
 
     .tweet-date {
       order: 1;
-      width: 49%;
-      margin-left: 6px;
-      font-size: 0.9em;
-      @media (min-width: $break) {
-        margin-left: 10px;
+      display: inline-block;
+      margin-left: 5px;
+      margin-top: 10px;
+      font-size: 90%;
+      width: 98%;
+      @media (min-width: $minor-break) {
+        order: 1;
         width: 30%;
+        font-size: 110%;
+        margin-left: 10px;
+        margin-top: 5px;
       }
     }
 
     .tweet-likes-container {
-      order: 3;
+      order: 2;
+      width: 35%;
+      font-size: 90%;
       margin-left: 5px;
-      width: 98%;
-      @media (min-width: $break) {
+      margin-top: 5px;
+      margin-bottom: 10px;
+      @media (min-width: $minor-break) {
         order: 2;
+        font-size: 110%;
         width: 30%;
       }
     }
 
     .tweet-likes {
       display: inline-block;
-      font-size: 0.9em;
     }
 
     .tweet-likes-suffix {
       display: inline-block;
-      font-size: 0.9em;
       margin-left: 0.2em;
     }
 
-    .icons {
-      order: 2;
+    .icons-container {
+      order: 3;
       display: inline-block;
-      width: 47%;
-      @media (min-width: $break) {
+      width: 58%;
+      text-align: right;
+      margin-right: 10px;
+      font-size: 110%;
+      @media (min-width: $minor-break) {
         order: 3;
-        margin-right: 5px;
-        width: 40%;
+        margin-right: 15px;
+        margin-top: 3px;
+        width: 39%;
+        font-size: 120%;
       }
     }
 
     .icon {
-      float: right;
-      margin-top: 30px;
-      margin-left: 10px;
-      padding-left: 5px;
+      text-align: right;
+      margin-left: 20px;
       color: #7BC3B7;
       opacity: 0;
-      @media (min-width: $break) {
-        margin-top: 10px;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      @media (min-width: $minor-break) {
+        margin-left: 16px;
       }
     }
 
@@ -182,8 +192,8 @@ $break: 411px;
       font-weight: 900;
       content: "\f079";
       color: #7BC3B7;
-      text-decoration: none;
       cursor: pointer;
+      margin-right: 5px;
     }
 
     .flag-tweet::before {
@@ -192,8 +202,7 @@ $break: 411px;
       font-weight: 900;
       content: "\f024";
       color: #7BC3B7;
-      text-decoration: none;
-      cursor: pointer;
+        cursor: pointer;
     }
 
     button {

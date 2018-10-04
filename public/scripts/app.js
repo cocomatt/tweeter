@@ -28,8 +28,27 @@ $(document).ready(function() {
     }
   };
 
-  const toggleNavMenu = function toggleSiteNavMenu() {
-    $('ul').toggleClass('opened closed');
+  const toggleNavMenu = function openCloseSiteNavMenu() {
+    $('.nav-list-items').slideToggle();
+  };
+
+  const toggleAbout = function openCloseAboutBox() {
+    $('.box-content-about').slideToggle();
+    $('.nav-list-items').slideUp();
+  };
+
+  const toggleRegister = function openCloseRegisterBox() {
+    $('.box-content-register').slideToggle();
+    $('.nav-list-items').slideUp();
+  };
+
+  const toggleLogin = function openCloseLoginBox() {
+    $('.box-content-login').slideToggle();
+    $('.nav-list-items').slideUp();
+  };
+
+  const closeBox = function closeBoxWhenXClicked(event) {
+    $(event.target).closest('[class^=box-content]').slideUp();
   };
 
   /* displays new tweet submission form */
@@ -59,23 +78,23 @@ $(document).ready(function() {
 
     /* footer section */
     let $footer = $('<footer></footer>').addClass('tweet-footer');
-    let $date = $('<p></p>').addClass('tweet-date').text(timeSince(tweet.created_at));
+    let $date = $('<span></span>').addClass('tweet-date').text(timeSince(tweet.created_at));
 
     /* footer likes container */
-    let $likesContainer = $('<div></div>').addClass('tweet-likes-container').attr({
+    let $likesContainer = $('<span></span>').addClass('tweet-likes-container').attr({
       id: `likes-counter-container-${tweet._id}`,
     });
-    let $likes = $('<p></p>').addClass('tweet-likes').text(tweet.likes_count).attr({
+    let $likes = $('<span></span>').addClass('tweet-likes').text(tweet.likes_count).attr({
       id: `likes-counter-${tweet._id}`,
       'data-likestotal': `${tweet.likes_count}`,
     });
-    let $likesSuffix = $('<p></p>').addClass('tweet-likes-suffix').text(showNumberOfTweetLikes(tweet.likes_count)).attr({
+    let $likesSuffix = $('<span></span>').addClass('tweet-likes-suffix').text(showNumberOfTweetLikes(tweet.likes_count)).attr({
       id: `likes-counter-suffix-${tweet._id}`,
     });
     $likesContainer.append($likes, $likesSuffix);
 
     /* footer icons container */
-    let $iconsContainer = $('<div></div>').addClass('icons').attr({
+    let $iconsContainer = $('<span></span>').addClass('icons-container').attr({
       id: `icons-container-${tweet._id}`,
     });
     let likeUnlikeURL = (tweet, function(url, idx) {
@@ -178,7 +197,7 @@ $(document).ready(function() {
   };
 
   /* Flash message rendition */
-  const renderFlashMessage = function invalidTweetDialogBox(message) {
+  const renderFlashMessage = function FlashMessageDialogBox(message) {
     console.log('renderFlashMessage invoked');
     const dialog = $('.flash');
     dialog.find('p').text(message);
@@ -260,12 +279,20 @@ $(document).ready(function() {
     }
   };
 
-  /* Hamberger menu behaviour */
-  $('.nav-menu').on('click', toggleNavMenu);
-  // $('.menu-toggle').on('click', toggleNavMenu);
-
   /* New tweet is hidden to begin with */
   $('.new-tweet').hide();
+
+  /* Navigation menu behaviour */
+  $('.nav-list-items').hide();
+  $('.nav-menu').on('click', toggleNavMenu);
+
+  $('.nav-list-item-about').on('click', toggleAbout);
+
+  $('.nav-list-item-register').on('click', toggleRegister);
+
+  $('.nav-list-item-login').on('click', toggleLogin);
+
+  $('.close-box').on('click', closeBox);
 
   /* Compose button behaviour */
   $('.compose').on('click', composeTweet);
@@ -274,7 +301,7 @@ $(document).ready(function() {
   $('#tweet-submission-form').on('submit', submitTweet);
 
   /* Flash message behaviour in the event of an invalid tweet form */
-  $('dialog').on('click', '.close', closeFlashMessage);
+  $('dialog').on('click', '.closeFlashBTN', closeFlashMessage);
 
   /* Like button behaviour */
   $('#tweets-container').on('click', '.like-tweet-selected, .like-tweet-not-selected', likeOrUnlikeTweet);

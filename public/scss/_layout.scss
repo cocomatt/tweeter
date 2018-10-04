@@ -200,7 +200,7 @@ body {
  * Additional CSS can be defined below or in other CSS files, as per instructions
  */
 
-$break: 411px;
+$break: 450px;
 //$break-large: 750px;
 
 main.container {
@@ -213,4 +213,33 @@ main.container {
   @media (min-width: $break) {
     width: 450px;
   }
+}
+
+.flash {
+  width: 80%;
+  @media (min-width: $break) {
+    width: 400px;
+  }
+
+  .closeFlashBTN {
+    background-color: #e8fdff;
+    color: #00a087;
+    padding: 10px 30px 10px 30px;
+    font-size: 1.4em;
+    transition: background 250ms ease-in-out, transform 150ms ease;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
+
+  .closeFlashBTN:hover {
+    background-color: white;
+  }
+
+  .closeFlashBTN:focus {
+    outline: none;
+  }
+}
+
+.hide {
+  display: none;
 }
