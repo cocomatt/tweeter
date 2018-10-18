@@ -1,5 +1,5 @@
 $minor-break: 398px;
-$break-nav-bar: 500px;
+$break-nav-bar: 450px;
 
 nav {
   position: fixed;
@@ -8,18 +8,27 @@ nav {
   height: 80px;
   width: 100%;
   background-color: #00a087;
+  // @media (min-width: $break-nav-bar) {
+  //   height: 130px;
+  // }
 
   .nav-bar-container {
     display: flex;
-    width: 90%;
+    width: 98%;
     height: 80px;
     margin-left: auto;
     margin-right: auto;
+    // @media (min-width: $minor-break) {
+    //   width: 380px;
+    // }
     @media (min-width: $break-nav-bar) {
       width: 450px;
+      // height: 130px;
     }
 
     .logo {
+      order: 1;
+      display:inline-block;
       height: 60px;
       width: 60px;
       margin-top: 10px;
@@ -32,6 +41,8 @@ nav {
     }
 
     .header {
+      order: 2;
+      display: inline-block;
       font-size: 160%;
       margin-top: 15px;
       color: #e8fdff;
@@ -43,7 +54,37 @@ nav {
       }
     }
 
+    .compose {
+      order: 3;
+      display: inline-block;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      height: 60px;
+      // width: 130px;
+      border: 1px black;
+      border-radius: 8px;
+      background-color: #E8FDFF;
+      font-size: 100%;
+      font-weight: lighter;
+      color: #00A087;
+      transition: background 250ms ease-in-out, transform 150ms ease;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      @media (min-width: $minor-break) {
+        font-size: 140%;
+      }
+      // @media(min-width: $break) {
+      //   margin-right: 0px;
+      // }
+    }
+
+    .compose:hover {
+      background-color: white;
+    }
+
     .nav-menu {
+      order: 4;
+      display: inline-block;
       font-size: 200%;
       margin-top: 20px;
       margin-left: auto;
@@ -54,6 +95,17 @@ nav {
         font-size: 300%;
         margin-top: 7px;
       }
+    }
+
+    .nav-avatar {
+      order: 5;
+      display: inline-block;
+      margin-top: 20px;
+      margin-left: auto;
+      height: 52px;
+      width: 52px;
+      border-radius: 5px;
+      cursor: pointer;
     }
 
     // .menu::before {
@@ -118,30 +170,6 @@ nav {
 
     li[class^='nav-list-item']:hover {
       background-color: #e8fdff;
-    }
-
-    .compose {
-      margin-top: 10px;
-      margin-bottom: 10px;
-      height: 60px;
-      width: 130px;
-      border: 1px black;
-      border-radius: 8px;
-      background-color: #E8FDFF;
-      font-size: 1.4em;
-      font-weight: lighter;
-      color: #00A087;
-      display: none;
-      transition: background 250ms ease-in-out, transform 150ms ease;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      @media(min-width: $break) {
-        margin-right: 0px;
-      }
-    }
-
-    .compose:hover {
-      background-color: white;
     }
   }
 }

@@ -1,35 +1,41 @@
 [
   {
-    "_id": "@FrogLife",
-    "name": "Kermit",
-    "email": "frog@frog.com",
-    "password": "frog1234",
-    "avatars" : {
-      "small" : "https://vanillicon.com/1712d3e1e7e0946429cc71901630ad80_50.png",
-      "regular" : "https://vanillicon.com/1712d3e1e7e0946429cc71901630ad80.png",
-      "large" : "https://vanillicon.com/1712d3e1e7e0946429cc71901630ad80_200.png"
+    "userInfo" : {
+      "handle": "FrogLife",
+      "name": "Kermit",
+      "email": "frog@frog.com",
+      "password": "frog1234",
+      "avatars" : {
+        "small" : "https://vanillicon.com/1712d3e1e7e0946429cc71901630ad80_50.png",
+        "regular" : "https://vanillicon.com/1712d3e1e7e0946429cc71901630ad80.png",
+        "large" : "https://vanillicon.com/1712d3e1e7e0946429cc71901630ad80_200.png"
+      },
     },
   },
   {
-    "_id": "@PigLife88",
-    "name": "Miss Piggy",
-    "email": "pig@pig.com",
-    "password": "pig12345",
-    "avatars" : {
-      "small" : "https://vanillicon.com/963a3cec395440c9a0de439f11db657b_50.png",
-      "regular" : "https://vanillicon.com/963a3cec395440c9a0de439f11db657b.png",
-      "large" : "https://vanillicon.com/963a3cec395440c9a0de439f11db657b_200.png"
+    "userInfo" : {
+      "handle": "PigLife88",
+      "name": "Miss Piggy",
+      "email": "pig@pig.com",
+      "password": "pig12345",
+      "avatars" : {
+        "small" : "https://vanillicon.com/963a3cec395440c9a0de439f11db657b_50.png",
+        "regular" : "https://vanillicon.com/963a3cec395440c9a0de439f11db657b.png",
+        "large" : "https://vanillicon.com/963a3cec395440c9a0de439f11db657b_200.png"
+      },
     },
   },
   {
-    "_id": "@BørkBørk",
-    "name": "Swedish Chef",
-    "email": "swede@swede.com",
-    "password": "swede123",
-    "avatars" : {
-      "small" : "https://vanillicon.com/691bdb7a4582e61944b1a127fea95be3_50.png",
-      "regular" : "https://vanillicon.com/691bdb7a4582e61944b1a127fea95be3.png",
-      "large" : "https://vanillicon.com/691bdb7a4582e61944b1a127fea95be3_200.png"
+    "userInfo" : {
+      "handle": "BørkBørk",
+      "name": "Swedish Chef",
+      "email": "swede@swede.com",
+      "password": "swede123",
+      "avatars" : {
+        "small" : "https://vanillicon.com/691bdb7a4582e61944b1a127fea95be3_50.png",
+        "regular" : "https://vanillicon.com/691bdb7a4582e61944b1a127fea95be3.png",
+        "large" : "https://vanillicon.com/691bdb7a4582e61944b1a127fea95be3_200.png"
+      },
     },
   },
 ]

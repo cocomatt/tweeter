@@ -1,10 +1,5 @@
 @import url("https://use.fontawesome.com/releases/v5.2.0/css/all.css");
 /*
- * http://www.paulirish.com/2012/box-sizing-border-box-ftw/
- * https://css-tricks.com/international-box-sizing-awareness-day/
- * Do not modify these two selectors, please
- */
-/*
  * Global layout stuff
  */
 html {
@@ -203,7 +198,7 @@ section[class^='box-content'] h1 {
   padding-bottom: 5%;
   border-bottom: 1px solid black; }
 
-.required:after {
+div[class^=required]:after {
   content: '*';
   color: red;
   text-align: right;
@@ -256,14 +251,16 @@ nav {
   background-color: #00a087; }
   nav .nav-bar-container {
     display: flex;
-    width: 90%;
+    width: 98%;
     height: 80px;
     margin-left: auto;
     margin-right: auto; }
-    @media (min-width: 500px) {
+    @media (min-width: 450px) {
       nav .nav-bar-container {
         width: 450px; } }
     nav .nav-bar-container .logo {
+      order: 1;
+      display: inline-block;
       height: 60px;
       width: 60px;
       margin-top: 10px;
@@ -274,6 +271,8 @@ nav {
           width: 80px;
           margin-top: 0px; } }
     nav .nav-bar-container .header {
+      order: 2;
+      display: inline-block;
       font-size: 160%;
       margin-top: 15px;
       color: #e8fdff;
@@ -283,17 +282,48 @@ nav {
         nav .nav-bar-container .header {
           font-size: 250%;
           margin-top: 5px; } }
+    nav .nav-bar-container .compose {
+      order: 3;
+      display: inline-block;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      height: 60px;
+      border: 1px black;
+      border-radius: 8px;
+      background-color: #E8FDFF;
+      font-size: 100%;
+      font-weight: lighter;
+      color: #00A087;
+      transition: background 250ms ease-in-out, transform 150ms ease;
+      -webkit-appearance: none;
+      -moz-appearance: none; }
+      @media (min-width: 398px) {
+        nav .nav-bar-container .compose {
+          font-size: 140%; } }
+    nav .nav-bar-container .compose:hover {
+      background-color: white; }
     nav .nav-bar-container .nav-menu {
+      order: 4;
+      display: inline-block;
       font-size: 200%;
       margin-top: 20px;
       margin-left: auto;
       color: black;
       font-weight: bolder;
       cursor: pointer; }
-      @media (min-width: 500px) {
+      @media (min-width: 450px) {
         nav .nav-bar-container .nav-menu {
           font-size: 300%;
           margin-top: 7px; } }
+    nav .nav-bar-container .nav-avatar {
+      order: 5;
+      display: inline-block;
+      margin-top: 20px;
+      margin-left: auto;
+      height: 52px;
+      width: 52px;
+      border-radius: 5px;
+      cursor: pointer; }
     nav .nav-bar-container .nav-list-items {
       display: flex;
       flex-direction: column;
@@ -306,7 +336,7 @@ nav {
       position: fixed;
       background-color: white;
       width: 100%; }
-      @media (min-width: 500px) {
+      @media (min-width: 450px) {
         nav .nav-bar-container .nav-list-items {
           flex-direction: row;
           justify-content: space-between; } }
@@ -328,7 +358,7 @@ nav {
       transition: background 250ms ease-in-out, transform 150ms ease;
       -webkit-appearance: none;
       -moz-appearance: none; }
-      @media (min-width: 500px) {
+      @media (min-width: 450px) {
         nav .nav-bar-container li[class^='nav-list-item'] {
           border-top: none;
           width: 33.33%; } }
@@ -336,26 +366,6 @@ nav {
       border-top: none; }
     nav .nav-bar-container li[class^='nav-list-item']:hover {
       background-color: #e8fdff; }
-    nav .nav-bar-container .compose {
-      margin-top: 10px;
-      margin-bottom: 10px;
-      height: 60px;
-      width: 130px;
-      border: 1px black;
-      border-radius: 8px;
-      background-color: #E8FDFF;
-      font-size: 1.4em;
-      font-weight: lighter;
-      color: #00A087;
-      display: none;
-      transition: background 250ms ease-in-out, transform 150ms ease;
-      -webkit-appearance: none;
-      -moz-appearance: none; }
-      @media (min-width: 450px) {
-        nav .nav-bar-container .compose {
-          margin-right: 0px; } }
-    nav .nav-bar-container .compose:hover {
-      background-color: white; }
 
 .new-tweet {
   align-content: flex-start;

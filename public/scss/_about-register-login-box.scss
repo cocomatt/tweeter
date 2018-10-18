@@ -34,7 +34,7 @@ section[class^='box-content'] h1 {
 //   margin-right: 5%;
 // }
 
-.required:after {
+div[class^=required]:after {
   content: '*';
   color: red;
   text-align: right;

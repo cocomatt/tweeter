@@ -43,12 +43,16 @@
       <img class="logo" src="/images/bird.png">
       <span class="header">Tweeter</span>
       <span class="nav-menu">MENU</span>
+      <img class="nav-avatar">
         <div class="nav-list">
-        <ul class="nav-list-items">
-          <li class="nav-list-item-about">About</li>
-          <li class="nav-list-item-register">Register</li>
-          <li class="nav-list-item-login">Login</li>
-        </ul>
+          <ul class="nav-list-items">
+            <li class="nav-list-item-about">About</li>
+            <li class="nav-list-item-register">Register</li>
+            <li class="nav-list-item-settings">Settings</li>
+            <li class="nav-list-item-login">Login</li>
+            <li class="nav-list-item-logout">Logout</li>
+          </ul>
+        </div>
       <button class="compose"><i class="far fa-edit"></i>Compose</button>
     </div>
   </nav>
@@ -99,7 +103,7 @@
       <br>
       <label>Enter your name (this does <i>not</i> have to be unique):</label>
       <div class='required'>
-        <input id="register-handle" type="text" class="input-res">
+        <input id="register-name" type="text" class="input-res">
       </div>
       <br>
       <label>Password:</label>
@@ -120,17 +124,21 @@
       <span class="close-box">&times;</span>
       <h1>Login</h1>
       <label>Email/Username:</label>
-      <div class='required'>
-        <input id="login-email-username" type="text" class="input-res">
-      </div>
-      <br>
-      <label>Password:</label>
-      <div class='required'>
-        <input id="login-password" type="password" class="input-res">
-      </div>
-      <br>
-      <input id="login" type="submit" value="Login" class="buttonBTN">
+      <form id="login-form" method="POST">
+        <div class='required-login-email-handle'>
+          <input id="login-email-handle" type="text" class="input-res">
+        </div>
+        <br>
+        <label>Password:</label>
+        <div class='required-login-password'>
+          <input id="login-password" type="password" class="input-res">
+        </div>
+        <br>
+        <input id="login" type="submit" value="Login" class="buttonBTN">
+      </form>
     </section>
+
+    <!-- New Tweet -->
     <section class="new-tweet">
       <h2>Compose Tweet</h2>
       <form id="tweet-submission-form" action="/tweets" method="POST">
