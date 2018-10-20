@@ -20,7 +20,7 @@ module.exports = function makeDataHelpers(db) {
       });
     },
 
-    // login
+    // acquires login inputs and checks them against `db`
     login: function(loginid, password, callback) {
       db.collection('users').find({ $or: [ { handle: loginid }, { email: loginid } ] }).toArray((err, userArray) => {
         if (err) {

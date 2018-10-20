@@ -60,7 +60,6 @@ nav {
       margin-top: 10px;
       margin-bottom: 10px;
       height: 60px;
-      // width: 130px;
       border: 1px black;
       border-radius: 8px;
       background-color: #E8FDFF;
@@ -73,9 +72,6 @@ nav {
       @media (min-width: $minor-break) {
         font-size: 140%;
       }
-      // @media(min-width: $break) {
-      //   margin-right: 0px;
-      // }
     }
 
     .compose:hover {

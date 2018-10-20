@@ -1,14 +1,11 @@
 /*
  * Client-side JS logic goes here
- * jQuery is already loaded
- * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
 
 'use strict';
 
 $(document).ready(function() {
 
-  // let USER;
   let USER_ID;
   let NAME;
   let HANDLE;
@@ -32,8 +29,13 @@ $(document).ready(function() {
     }
   };
 
-  const toggleNavMenu = function openCloseSiteNavMenu() {
+  const toggleNavMenu = function openCloseSiteNavMenu(event) {
+    event.stopPropagation();
     $('.nav-list-items').slideToggle();
+  };
+
+  const hideNavMenu = function closesNavMenuWhenUserClicksElsewhereInTheDocument(event) {
+    $('.nav-list-items').slideUp();
   };
 
   const toggleAbout = function openCloseAboutBox() {
@@ -105,10 +107,6 @@ $(document).ready(function() {
             NAME = response.user.name;
             HANDLE = response.user.handle;
             AVATARS = response.user.avatars;
-            console.log('This should be the final USER_ID: ', USER_ID);
-            console.log('This should be the final NAME: ', NAME);
-            console.log('This should be the final HANDLE: ', HANDLE);
-            console.log('This should be the final AVATARS: ', AVATARS);
             clearBox();
             closeBox(event);
             displayAvatarAndComposeButton();
@@ -278,7 +276,7 @@ $(document).ready(function() {
   /* async tweet sumbission to database and rendition on same page */
   const submitTweet = function postNewTweet(event) {
     console.log('submitTweet invoked');
-    console.log('submitTweet, user = ', HANDLE); // USER);
+    console.log('submitTweet, user = ', HANDLE);
     event.preventDefault();
     const errorMessages = validateTweet($(this).find('textarea').val());
     if (errorMessages.length) {
@@ -314,6 +312,7 @@ $(document).ready(function() {
     dialog[0].showModal();
   };
 
+  /* Closes flash message */
   const closeFlashMessage = function closeFlashMessageWhenUserPressesOK(event) {
     $(this).parent()[0].close();
   };
@@ -408,7 +407,7 @@ $(document).ready(function() {
   $('.nav-list-item-logout').hide();
   $('.nav-menu').on('click', toggleNavMenu);
   $('.nav-avatar').on('click', toggleNavMenu);
-
+  $(document).on('click', hideNavMenu);
   $('.nav-list-item-about').on('click', toggleAbout);
   $('.nav-list-item-register').on('click', toggleRegister);
   $('.nav-list-item-login').on('click', toggleLogin);

@@ -21,7 +21,6 @@ module.exports = function(DataHelpers) {
 
   usersRoutes.post('/login', function(req, res) {
     DataHelpers.login(req.body.loginid, req.body.password, (err, user) => {
-      console.log('user at login: ', user);
       if (err) {
         res.status(500).json({
           error: err.message,
@@ -31,9 +30,7 @@ module.exports = function(DataHelpers) {
         errorMessages.push("That user doesn't exist. Please enter a valid username or email address. If you haven't registered, please do so.");
         res.status(200).json({errorMessages: errorMessages});
       } else if (user) {
-        console.log('req.session: ', req.session);
         req.session.user_id = user._id;
-        console.log('req.session.user_id: ', req.session.user_id);
         res.status(200).json({user: user});
       } else {
         res.status(403).send();
