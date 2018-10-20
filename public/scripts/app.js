@@ -8,7 +8,7 @@
 
 $(document).ready(function() {
 
-  let USER;
+  // let USER;
   let USER_ID;
   let NAME;
   let HANDLE;
@@ -37,16 +37,19 @@ $(document).ready(function() {
   };
 
   const toggleAbout = function openCloseAboutBox() {
+    window.scrollTo(0, 0);
     $('.box-content-about').slideToggle();
     $('.nav-list-items').slideUp();
   };
 
   const toggleRegister = function openCloseRegisterBox() {
+    window.scrollTo(0, 0);
     $('.box-content-register').slideToggle();
     $('.nav-list-items').slideUp();
   };
 
   const toggleLogin = function openCloseLoginBox() {
+    window.scrollTo(0, 0);
     $('.box-content-login').slideToggle();
     $('.nav-list-items').slideUp();
   };
@@ -60,7 +63,7 @@ $(document).ready(function() {
     $('#login-password').val('');
   };
 
-  const displayAvatarAndComposeButton = function replacesMenuButtonWithUserAvatarAndComposeButton(USER) {
+  const displayAvatarAndComposeButton = function replacesMenuButtonWithUserAvatarAndComposeButton() {
     $('.nav-menu').hide();
     $('.nav-avatar').attr({
       src: AVATARS.small,
@@ -73,22 +76,16 @@ $(document).ready(function() {
     $('.compose').show();
   };
 
-  const validateLoginInputs = function checkLoginParamaters(loginid, password) {
-    console.log('validateLoginInputs invoked');
-    let errorMessages = [];
-    if (!loginid || !password) {
-      errorMessages.push('Please enter a username, email address and/or your password.');
-    }
-    return errorMessages;
-  };
-
   /* Login validation */
-  const userLogin = function checksLoginCredentials(event) {
+  const userLogin = function validatesLoginInputs(event) {
     event.preventDefault();
     console.log('userLogin invoked');
     let loginid = $(this).siblings('.required-login-email-handle').children('#login-email-handle').val();
     let password = $(this).siblings('.required-login-password').children('#login-password').val();
-    const errorMessages = validateLoginInputs(loginid, password);
+    let errorMessages = [];
+    if (!loginid || !password) {
+      errorMessages.push('Please enter your username or email address and your password.');
+    }
     if (errorMessages.length) {
       renderFlashMessage(errorMessages);
     } else {
@@ -99,26 +96,49 @@ $(document).ready(function() {
         dataType: 'json',
         error: ajaxErrors,
         success: function(response) {
-          console.log('response: ', response);
-          // let USER = response.user;
-          USER = response.user;
-          USER_ID = response.user._id;
-          NAME = response.user.name;
-          HANDLE = response.user.handle;
-          AVATARS = response.user.avatars;
-          console.log('This should be the final USER: ', USER);
-          console.log('This should be the final USER_ID: ', USER_ID);
-          console.log('This should be the final NAME: ', NAME);
-          console.log('This should be the final HANDLE: ', HANDLE);
-          console.log('This should be the final AVATARS: ', AVATARS);
-          clearBox();
-          closeBox(event);
-          displayAvatarAndComposeButton(USER);
-          $('#tweets-container').empty();
-          loadTweets();
+          if (response.errorMessages) {
+            let errorMessages = [];
+            errorMessages.push(response.errorMessages[0]);
+            renderFlashMessage(errorMessages);
+          } else {
+            USER_ID = response.user._id;
+            NAME = response.user.name;
+            HANDLE = response.user.handle;
+            AVATARS = response.user.avatars;
+            console.log('This should be the final USER_ID: ', USER_ID);
+            console.log('This should be the final NAME: ', NAME);
+            console.log('This should be the final HANDLE: ', HANDLE);
+            console.log('This should be the final AVATARS: ', AVATARS);
+            clearBox();
+            closeBox(event);
+            displayAvatarAndComposeButton();
+            $('#tweets-container').empty();
+            loadTweets();
+          }
         },
       });
     }
+  };
+
+  const userLogout = function userIsLoggedOut(event) {
+    $.ajax({
+      url: '/logout',
+      method: 'POST',
+      success: function() {
+        $('.compose').hide();
+        $('.nav-avatar').hide();
+        $('.nav-menu').show();
+        $('.nav-list-items').slideUp();
+        $('.nav-list-item-register').show();
+        $('.nav-list-item-settings').hide();
+        $('.nav-list-item-login').show();
+        $('.nav-list-item-logout').hide();
+        USER_ID = null;
+        NAME = null;
+        HANDLE = null;
+        AVATARS = null;
+      },
+    });
   };
 
   /* displays new tweet submission form */
@@ -179,6 +199,8 @@ $(document).ready(function() {
       }
       return 'Like';
     });
+    let $flag = $('<span></span>').addClass('icon flag-tweet').attr('href', 'javascript:void(0);');
+    let $retweet = $('<span></span>').addClass('icon retweet-tweet').attr('href', 'javascript:void(0);');
     if (!HANDLE) {
       let $heart = $('<button></button>').addClass('icon like-tweet-not-selected');
     }
@@ -188,9 +210,7 @@ $(document).ready(function() {
       method: 'POST',
       action: likeUnlikeURL,
     });
-    let $retweet = $('<span></span>').addClass('icon retweet-tweet').attr('href', 'javascript:void(0);');
-    let $flag = $('<span></span>').addClass('icon flag-tweet').attr('href', 'javascript:void(0);');
-    $iconsContainer.append($heart, $retweet, $flag);
+    $iconsContainer.append($flag, $retweet, $heart);
 
     $footer.append($date, $likesContainer, $iconsContainer);
 
@@ -214,7 +234,7 @@ $(document).ready(function() {
 
   /* makes heart red if user likes tweet */
   const showUserLikedTweets = function makeHeartRedIfUserLikesTweet(tweet, user) {
-    if ((!HANDLE) || ((tweet.likes).indexOf(HANDLE) > -1)) {
+    if ((!HANDLE) || ((tweet.likes).indexOf(HANDLE) === -1)) {
       console.log('if !HANDLE or HANDLE not in likes array -- HANDLE: false');
       console.log('if !HANDLE or HANDLE not in likes array -- tweet.user.handle: ', tweet.user.handle);
       console.log('user does not like tweet');
@@ -225,7 +245,6 @@ $(document).ready(function() {
       console.log('user likes tweet');
       return 'like-tweet-selected';
     }
-    // return 'like-tweet-not-selected';
   };
 
   /* pluralizes number of likes if likes !== 1 */
@@ -259,7 +278,7 @@ $(document).ready(function() {
   /* async tweet sumbission to database and rendition on same page */
   const submitTweet = function postNewTweet(event) {
     console.log('submitTweet invoked');
-    console.log('submitTweet, user =', USER);
+    console.log('submitTweet, user = ', HANDLE); // USER);
     event.preventDefault();
     const errorMessages = validateTweet($(this).find('textarea').val());
     if (errorMessages.length) {
@@ -279,7 +298,7 @@ $(document).ready(function() {
         data: tweetSubmission,
         error: ajaxErrors,
         success: function() {
-          console.log('on success of submit tweet, user = ', USER);
+          console.log('on success of submit tweet, user = ', USER_ID, NAME, HANDLE, AVATARS);
           loadTweets('newTweetYes');
           clearTextArea();
         },
@@ -319,9 +338,16 @@ $(document).ready(function() {
 
   /* Like validation */
   const validateLike = function checkUserCannotLikeOwnTweet(handle, HANDLE) {
+    let displayedHANDLE = `@${HANDLE}`;
     console.log('validateLike invoked');
+    console.log('HANDLE: ', HANDLE);
+    console.log('handle: ', handle);
+    console.log('displayedHANDLE: ', displayedHANDLE);
     let errorMessages = [];
-    if (HANDLE === handle) {
+    if (!HANDLE) {
+      errorMessages.push('You have to login or register before you can like a tweet.');
+    }
+    if (displayedHANDLE === handle) {
       errorMessages.push('You can\'t like your own tweet.');
     }
     return errorMessages;
@@ -332,6 +358,7 @@ $(document).ready(function() {
     event.preventDefault();
     console.log('likeOrUnlikeTweet invoked');
     let handle = $(this).closest('article').find('.handle').text();
+    console.log('handle under likeOrUnlikeTweet function: ', handle);
     let articleDataId = $(this).closest('article').data('tweetid');
     const errorMessages = validateLike(handle, HANDLE);
     if (errorMessages.length) {
@@ -360,12 +387,12 @@ $(document).ready(function() {
     if ($(event.target).closest('article').find(heartButtonElement).hasClass('like-tweet-selected')) {
       $(event.target).closest('article').find('.like-tweet-selected').removeAttr('title action').attr({
         title: 'Unlike',
-        action: `/tweets/${articleDataId}/${handle}/unlike`,
+        action: `/tweets/${articleDataId}/${HANDLE}/unlike`,
       });
     } else if ($(event.target).closest('article').find(heartButtonElement).hasClass('like-tweet-not-selected')) {
       $(event.target).closest('article').find('.like-tweet-not-selected').removeAttr('title action').attr({
         title: 'Like',
-        action: `/tweets/${articleDataId}/${handle}/like`,
+        action: `/tweets/${articleDataId}/${HANDLE}/like`,
       });
     }
   };
@@ -389,6 +416,7 @@ $(document).ready(function() {
   $('.close-box').on('click', closeBox);
 
   $('#login').on('click', userLogin);
+  $('.nav-list-item-logout').on('click', userLogout);
 
   /* Compose button behaviour */
   $('.compose').on('click', composeTweet);

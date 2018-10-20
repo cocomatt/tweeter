@@ -3,6 +3,8 @@
 const ObjectId = require('mongodb').ObjectID;
 const bcrypt = require('bcryptjs');
 
+const salt = bcrypt.genSaltSync(10);
+
 // Defines helper functions for saving and getting tweets,
 // using the database `db`
 module.exports = function makeDataHelpers(db) {
@@ -23,21 +25,10 @@ module.exports = function makeDataHelpers(db) {
       db.collection('users').find({ $or: [ { handle: loginid }, { email: loginid } ] }).toArray((err, userArray) => {
         if (err) {
           callback(err, null);
-        }
-        if (!userArray[0]) {
-          callback(null, null);
-        }
-        if (password === userArray[0].password) {
-          let user = userArray[0];
-          // let loggedInUser = {
-          //   _id: userArray[0]._id,
-          //   name: userArray[0].name,
-          //   handle: userArray[0].handle,
-          //   avatars: userArray[0].avatars,
-          // };
-          // console.log('loggedInUser: ', loggedInUser);
-          // callback(null, loggedInUser);
-          callback(null, user);
+        } else if (!userArray[0]) {
+          callback(null, false);
+        } else if (bcrypt.compareSync(password, userArray[0].hashed_password)) {
+          callback(null, userArray[0]);
         } else {
           callback(null, null);
         }

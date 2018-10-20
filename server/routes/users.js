@@ -7,7 +7,7 @@ const usersRoutes = express.Router();
 
 module.exports = function(DataHelpers) {
 
-  usersRoutes.get('/', function(req, res) {
+  usersRoutes.get('/users', function(req, res) {
     DataHelpers.getUsers((err, users) => {
       if (err) {
         res.status(500).json({
@@ -21,21 +21,29 @@ module.exports = function(DataHelpers) {
 
   usersRoutes.post('/login', function(req, res) {
     DataHelpers.login(req.body.loginid, req.body.password, (err, user) => {
+      console.log('user at login: ', user);
       if (err) {
         res.status(500).json({
           error: err.message,
         });
+      } else if (user === false) {
+        let errorMessages = [];
+        errorMessages.push("That user doesn't exist. Please enter a valid username or email address. If you haven't registered, please do so.");
+        res.status(200).json({errorMessages: errorMessages});
+      } else if (user) {
+        console.log('req.session: ', req.session);
+        req.session.user_id = user._id;
+        console.log('req.session.user_id: ', req.session.user_id);
+        res.status(200).json({user: user});
       } else {
-        if (user) {
-          console.log('user: ', user);
-          req.session.userId = user._id;
-          console.log('req.session.userId: ', req.session.userId);
-          res.status(200).json({user: user});
-        } else {
-          res.status(403).send();
-        }
+        res.status(403).send();
       }
     });
+  });
+
+  usersRoutes.post('/logout', function(req, res) {
+    req.session.user_id = null;
+    res.status(200).send();
   });
 
   return usersRoutes;

@@ -520,7 +520,7 @@ nav {
       @media (min-width: 398px) {
         .tweet .tweet-footer .tweet-date {
           order: 1;
-          width: 30%;
+          width: 33%;
           font-size: 110%;
           margin-left: 10px;
           margin-top: 5px; } }
@@ -535,7 +535,7 @@ nav {
         .tweet .tweet-footer .tweet-likes-container {
           order: 2;
           font-size: 110%;
-          width: 30%; } }
+          width: 27%; } }
     .tweet .tweet-footer .tweet-likes {
       display: inline-block; }
     .tweet .tweet-footer .tweet-likes-suffix {
@@ -586,7 +586,7 @@ nav {
       content: "\f079";
       color: #7BC3B7;
       cursor: pointer;
-      margin-right: 5px; }
+      margin-left: 5px; }
     .tweet .tweet-footer .flag-tweet::before {
       font-family: "Font Awesome 5 Free";
       font-style: normal;

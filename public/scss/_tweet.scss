@@ -110,7 +110,7 @@ $minor-break: 398px;
       width: 98%;
       @media (min-width: $minor-break) {
         order: 1;
-        width: 30%;
+        width: 33%;
         font-size: 110%;
         margin-left: 10px;
         margin-top: 5px;
@@ -127,7 +127,7 @@ $minor-break: 398px;
       @media (min-width: $minor-break) {
         order: 2;
         font-size: 110%;
-        width: 30%;
+        width: 27%;
       }
     }
 
@@ -193,7 +193,7 @@ $minor-break: 398px;
       content: "\f079";
       color: #7BC3B7;
       cursor: pointer;
-      margin-right: 5px;
+      margin-left: 5px;
     }
 
     .flag-tweet::before {
@@ -202,7 +202,7 @@ $minor-break: 398px;
       font-weight: 900;
       content: "\f024";
       color: #7BC3B7;
-        cursor: pointer;
+      cursor: pointer;
     }
 
     button {
