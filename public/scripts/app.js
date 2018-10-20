@@ -34,7 +34,7 @@ $(document).ready(function() {
     $('.nav-list-items').slideToggle();
   };
 
-  const hideNavMenu = function closesNavMenuWhenUserClicksElsewhereInTheDocument(event) {
+  const hideNavMenu = function closesNavMenuWhenUserClicksElsewhereInTheDocument() {
     $('.nav-list-items').slideUp();
   };
 
