@@ -9,7 +9,6 @@ module.exports = function(DataHelpers) {
 
   tweetsRoutes.get('/', function(req, res) {
     DataHelpers.getTweets((err, tweets) => {
-      console.log('req.session under getTweets "/" route: ', req.session);
       if (err) {
         res.status(500).json({
           error: err.message,

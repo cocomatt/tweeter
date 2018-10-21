@@ -84,7 +84,6 @@ $(document).ready(function() {
   /* Registration validation */
   const userRegistration = function validatesRegistrationInputs(event) {
     event.preventDefault();
-    console.log('userRegistration invoked');
     let email = $(this).siblings('.required-registration-email').children('#register-email').val();
     let handle = $(this).siblings('.required-registration-handle').children('#register-handle').val();
     let name = $(this).siblings('.required-registration-name').children('#register-name').val();
@@ -110,38 +109,33 @@ $(document).ready(function() {
       errorMessages.push('The password you re-entered doesn\'t match\n');
     }
     if (errorMessages.length) {
-      console.log('errorMessages under userRegistration: ', errorMessages);
       renderFlashMessage(errorMessages);
     } else {
+      let newUser = {
+        email: email,
+        handle: handle,
+        name: name,
+        password: password,
+      };
       $.ajax({
         url: '/register',
         method: 'POST',
-        data: {
-          email: email,
-          handle: handle,
-          name: name,
-          password: password,
-        },
+        data: {newUser: newUser},
         dataType: 'json',
         error: ajaxErrors,
         success: function(response) {
-          console.log('response under userRegistration: ', response);
           if (response.errorMessages) {
             let errorMessages = [];
             errorMessages.push(response.errorMessages[0]);
             renderFlashMessage(errorMessages);
+          } else {
+            HANDLE = response.newUser.handle;
+            NAME = response.newUser.name;
+            AVATARS = response.newUser.avatars;
+            clearBox();
+            closeBox(event);
+            displayAvatarAndComposeButton();
           }
-        //   } else {
-        //     USER_ID = response.user._id;
-        //     NAME = response.user.name;
-        //     HANDLE = response.user.handle;
-        //     AVATARS = response.user.avatars;
-        //     clearBox();
-        //     closeBox(event);
-        //     displayAvatarAndComposeButton();
-        //     $('#tweets-container').empty();
-        //     loadTweets();
-        //   }
         },
       });
     }
@@ -150,7 +144,6 @@ $(document).ready(function() {
   /* Login validation */
   const userLogin = function validatesLoginInputs(event) {
     event.preventDefault();
-    console.log('userLogin invoked');
     let loginid = $(this).siblings('.required-login-email-handle').children('#login-email-handle').val();
     let password = $(this).siblings('.required-login-password').children('#login-password').val();
     let errorMessages = [];
@@ -161,7 +154,6 @@ $(document).ready(function() {
       errorMessages.push('You forgot your password.');
     }
     if (errorMessages.length) {
-      console.log('errorMessages under userLogin: ', errorMessages);
       renderFlashMessage(errorMessages);
     } else {
       $.ajax({
@@ -176,10 +168,10 @@ $(document).ready(function() {
             errorMessages.push(response.errorMessages[0]);
             renderFlashMessage(errorMessages);
           } else {
-            USER_ID = response.user._id;
-            NAME = response.user.name;
-            HANDLE = response.user.handle;
-            AVATARS = response.user.avatars;
+            USER_ID = response.validUser._id;
+            NAME = response.validUser.name;
+            HANDLE = response.validUser.handle;
+            AVATARS = response.validUser.avatars;
             clearBox();
             closeBox(event);
             displayAvatarAndComposeButton();
@@ -204,6 +196,7 @@ $(document).ready(function() {
         $('.nav-list-item-settings').hide();
         $('.nav-list-item-login').show();
         $('.nav-list-item-logout').hide();
+        $('.new-tweet').hide();
         USER_ID = null;
         NAME = null;
         HANDLE = null;
@@ -296,9 +289,7 @@ $(document).ready(function() {
 
   /* tweets in database are rendered on page */
   const renderTweets = function prependEachTweetFromArrayOfTweets(tweets) {
-    console.log('renderTweets invoked');
     tweets.forEach(function(tweet) {
-      console.log(tweet);
       $('#tweets-container').prepend(createTweetElement(tweet));
     });
   };
@@ -306,14 +297,8 @@ $(document).ready(function() {
   /* makes heart red if user likes tweet */
   const showUserLikedTweets = function makeHeartRedIfUserLikesTweet(tweet, user) {
     if ((!HANDLE) || ((tweet.likes).indexOf(HANDLE) === -1)) {
-      console.log('if !HANDLE or HANDLE not in likes array -- HANDLE: false');
-      console.log('if !HANDLE or HANDLE not in likes array -- tweet.user.handle: ', tweet.user.handle);
-      console.log('user does not like tweet');
       return 'like-tweet-not-selected';
     } else if ((tweet.likes).indexOf(HANDLE) > -1) {
-      console.log('if HANDLE or HANDLE is in likes array -- HANDLE: true');
-      console.log('if HANDLE or HANDLE is in likes array -- tweet.user.handle: ', tweet.user.handle);
-      console.log('user likes tweet');
       return 'like-tweet-selected';
     }
   };
@@ -328,7 +313,6 @@ $(document).ready(function() {
 
   /* Tweet form validation */
   const validateTweet = function checkTweetForContentAndLength(tweetText) {
-    console.log('validateTweet invoked');
     let errorMessages = [];
     if (!tweetText || tweetText.length === 0) {
       errorMessages.push('There is no content in your tweet. Please type something!');
@@ -348,8 +332,6 @@ $(document).ready(function() {
 
   /* async tweet sumbission to database and rendition on same page */
   const submitTweet = function postNewTweet(event) {
-    console.log('submitTweet invoked');
-    console.log('submitTweet, user = ', HANDLE);
     event.preventDefault();
     const errorMessages = validateTweet($(this).find('textarea').val());
     if (errorMessages.length) {
@@ -362,14 +344,12 @@ $(document).ready(function() {
         avatars: AVATARS,
         content: $(this).find('textarea').val(),
       };
-      console.log('tweetSubmission', tweetSubmission);
       $.ajax({
         method: 'POST',
         url: $(this).attr('action'),
         data: tweetSubmission,
         error: ajaxErrors,
         success: function() {
-          console.log('on success of submit tweet, user = ', USER_ID, NAME, HANDLE, AVATARS);
           loadTweets('newTweetYes');
           clearTextArea();
         },
@@ -379,7 +359,6 @@ $(document).ready(function() {
 
   /* Flash message rendition */
   const renderFlashMessage = function FlashMessageDialogBox(messages) {
-    console.log('renderFlashMessage invoked');
     const dialog = $('.flash');
     if (messages.length) {
       $('.error-messages-container').empty();
@@ -399,7 +378,6 @@ $(document).ready(function() {
 
   /* async loading of rendered tweets on page */
   const loadTweets = function loadTweetsFromDatabase(newTweet) {
-    console.log('loadTweets invoked');
     $.ajax({
       url: '/tweets',
       method: 'GET',
@@ -418,10 +396,6 @@ $(document).ready(function() {
   /* Like validation */
   const validateLike = function checkUserCannotLikeOwnTweet(handle, HANDLE) {
     let displayedHANDLE = `@${HANDLE}`;
-    console.log('validateLike invoked');
-    console.log('HANDLE: ', HANDLE);
-    console.log('handle: ', handle);
-    console.log('displayedHANDLE: ', displayedHANDLE);
     let errorMessages = [];
     if (!HANDLE) {
       errorMessages.push('You have to login or register before you can like a tweet.');
@@ -435,9 +409,7 @@ $(document).ready(function() {
   /* Async tweet sumbission to database and rendition on same page */
   const likeOrUnlikeTweet = function postLikeOrUnlikeToDatabase(event) {
     event.preventDefault();
-    console.log('likeOrUnlikeTweet invoked');
     let handle = $(this).closest('article').find('.handle').text();
-    console.log('handle under likeOrUnlikeTweet function: ', handle);
     let articleDataId = $(this).closest('article').data('tweetid');
     const errorMessages = validateLike(handle, HANDLE);
     if (errorMessages.length) {
@@ -460,7 +432,6 @@ $(document).ready(function() {
   /* Liking a tweet turns heart red and increments likes counter */
   /* Unliking a tweet turns heart back to default color and decrements likes counter */
   const toggleHeartColor = function changesColorOfHeartDependingOnPreviousColorAndUpdatesLikesCounter(event, articleDataId) {
-    console.log('toggleHeartColor invoked');
     $(event.target).toggleClass('like-tweet-selected like-tweet-not-selected');
     let heartButtonElement = $('[id^=btn-heart-]');
     if ($(event.target).closest('article').find(heartButtonElement).hasClass('like-tweet-selected')) {

@@ -2,7 +2,6 @@
 
 const ObjectId = require('mongodb').ObjectID;
 const bcrypt = require('bcryptjs');
-
 const salt = bcrypt.genSaltSync(10);
 
 // Defines helper functions for saving and getting tweets,
@@ -21,21 +20,23 @@ module.exports = function makeDataHelpers(db) {
     },
 
     // acquires registration inputs and checks them against `db`
-    register: function(email, handle, name, password, callback) {
-      db.collection('users').find({ $or: [ { handle: handle }, { email: email } ] }).toArray((err, userArray) => {
+    register: function(newUser, callback) {
+      db.collection('users').find({ $or: [ { handle: newUser.handle }, { email: newUser.email } ] }).toArray((err, userArray) => {
         if (err) {
           callback(err, null);
         } else if (!userArray[0]) {
-          console.log('user is not registered');
-          callback(null, false);
-        } else if (email === userArray[0].email) {
-          let emailExists = 'emailExists';
-          callback(null, emailExists);
-        } else if (handle === userArray[0].handle) {
+          db.collection('users').insertOne(newUser, (err, res) => {
+            if (err) {
+              return callback(err);
+            }
+            callback(null, true);
+          });
+        } else if (newUser.handle === userArray[0].handle) {
           let handleExists = 'handleExists';
           callback(null, handleExists);
-        // } else if (bcrypt.compareSync(password, userArray[0].hashed_password)) {
-        //   callback(null, userArray[0]);
+        } else if (newUser.email === userArray[0].email) {
+          let emailExists = 'emailExists';
+          callback(null, emailExists);
         } else {
           callback(null, null);
         }
@@ -46,7 +47,7 @@ module.exports = function makeDataHelpers(db) {
     login: function(loginid, password, callback) {
       db.collection('users').find({ $or: [ { handle: loginid }, { email: loginid } ] }).toArray((err, userArray) => {
         if (err) {
-          callback(err, null);
+          return callback(err);
         } else if (!userArray[0]) {
           callback(null, false);
         } else if (bcrypt.compareSync(password, userArray[0].hashed_password)) {
@@ -87,7 +88,6 @@ module.exports = function makeDataHelpers(db) {
             if (err) {
               return callback(err);
             }
-            console.log('updateTweetLikesPushorPullUserHandle inc: ', res);
             callback(null, res);
           });
       } else if (likeaction === 'unlike') {
@@ -99,7 +99,6 @@ module.exports = function makeDataHelpers(db) {
             if (err) {
               return callback(err);
             }
-            console.log('updateTweetLikesPushorPullUserHandle dec: ', res);
             callback(null, res);
           }
         );
