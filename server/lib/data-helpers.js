@@ -20,6 +20,28 @@ module.exports = function makeDataHelpers(db) {
       });
     },
 
+    // acquires registration inputs and checks them against `db`
+    register: function(email, handle, name, password, callback) {
+      db.collection('users').find({ $or: [ { handle: handle }, { email: email } ] }).toArray((err, userArray) => {
+        if (err) {
+          callback(err, null);
+        } else if (!userArray[0]) {
+          console.log('user is not registered');
+          callback(null, false);
+        } else if (email === userArray[0].email) {
+          let emailExists = 'emailExists';
+          callback(null, emailExists);
+        } else if (handle === userArray[0].handle) {
+          let handleExists = 'handleExists';
+          callback(null, handleExists);
+        // } else if (bcrypt.compareSync(password, userArray[0].hashed_password)) {
+        //   callback(null, userArray[0]);
+        } else {
+          callback(null, null);
+        }
+      });
+    },
+
     // acquires login inputs and checks them against `db`
     login: function(loginid, password, callback) {
       db.collection('users').find({ $or: [ { handle: loginid }, { email: loginid } ] }).toArray((err, userArray) => {

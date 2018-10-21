@@ -78,6 +78,72 @@ $(document).ready(function() {
     $('.compose').show();
   };
 
+  /* Registration validation */
+  const userRegistration = function validatesRegistrationInputs(event) {
+    event.preventDefault();
+    console.log('userRegistration invoked');
+    let email = $(this).siblings('.required-registration-email').children('#register-email').val();
+    let handle = $(this).siblings('.required-registration-handle').children('#register-handle').val();
+    let name = $(this).siblings('.required-registration-name').children('#register-name').val();
+    let password = $(this).siblings('.required-registration-password').children('#register-password').val();
+    let passwordConfirmation = $(this).siblings('.required-registration-password-confirmation').children('#register-password-confirmation').val();
+    let errorMessages = [];
+    if (!email) {
+      errorMessages.push('Please enter a valid email address.\n');
+    }
+    if (!handle) {
+      errorMessages.push('Please enter a user name.\n');
+    }
+    if (!name) {
+      errorMessages.push('Please enter your name.\n');
+    }
+    if (!password) {
+      errorMessages.push('Please enter a password.\n');
+    }
+    if (password && !passwordConfirmation) {
+      errorMessages.push('Please re-enter your password.\n');
+    }
+    if (password !== passwordConfirmation) {
+      errorMessages.push('The password you re-entered doesn\'t match\n');
+    }
+    if (errorMessages.length) {
+      console.log('errorMessages under userRegistration: ', errorMessages);
+      renderFlashMessage(errorMessages);
+    } else {
+      $.ajax({
+        url: '/register',
+        method: 'POST',
+        data: {
+          email: email,
+          handle: handle,
+          name: name,
+          password: password,
+        },
+        dataType: 'json',
+        error: ajaxErrors,
+        success: function(response) {
+          console.log('response under userRegistration: ', response);
+          if (response.errorMessages) {
+            let errorMessages = [];
+            errorMessages.push(response.errorMessages[0]);
+            renderFlashMessage(errorMessages);
+          }
+        //   } else {
+        //     USER_ID = response.user._id;
+        //     NAME = response.user.name;
+        //     HANDLE = response.user.handle;
+        //     AVATARS = response.user.avatars;
+        //     clearBox();
+        //     closeBox(event);
+        //     displayAvatarAndComposeButton();
+        //     $('#tweets-container').empty();
+        //     loadTweets();
+        //   }
+        },
+      });
+    }
+  };
+
   /* Login validation */
   const userLogin = function validatesLoginInputs(event) {
     event.preventDefault();
@@ -85,10 +151,14 @@ $(document).ready(function() {
     let loginid = $(this).siblings('.required-login-email-handle').children('#login-email-handle').val();
     let password = $(this).siblings('.required-login-password').children('#login-password').val();
     let errorMessages = [];
-    if (!loginid || !password) {
-      errorMessages.push('Please enter your username or email address and your password.');
+    if (!loginid) {
+      errorMessages.push('Please enter your username or email address.');
+    }
+    if (!password) {
+      errorMessages.push('You forgot your password.');
     }
     if (errorMessages.length) {
+      console.log('errorMessages under userLogin: ', errorMessages);
       renderFlashMessage(errorMessages);
     } else {
       $.ajax({
@@ -305,11 +375,18 @@ $(document).ready(function() {
   };
 
   /* Flash message rendition */
-  const renderFlashMessage = function FlashMessageDialogBox(message) {
+  const renderFlashMessage = function FlashMessageDialogBox(messages) {
     console.log('renderFlashMessage invoked');
     const dialog = $('.flash');
-    dialog.find('p').text(message);
-    dialog[0].showModal();
+    if (messages.length) {
+      $('.error-messages-container').empty();
+      messages.forEach(function(message) {
+        let $errorMessage = $('<div></div>').addClass('error-message').html(message + '<br>');
+        let $errorMessagesContainer = $('<section></section>').append($errorMessage);
+        $('.error-messages-container').append($errorMessage);
+      });
+      dialog[0].showModal();
+    }
   };
 
   /* Closes flash message */
@@ -414,6 +491,7 @@ $(document).ready(function() {
 
   $('.close-box').on('click', closeBox);
 
+  $('#register').on('click', userRegistration);
   $('#login').on('click', userLogin);
   $('.nav-list-item-logout').on('click', userLogout);
 

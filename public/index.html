@@ -60,7 +60,10 @@
   <!-- Flash Message Dialog -->
   <dialog class="flash">
     <h2 class="error-oops">Oops!</h2>
-    <p class="error-messsage"></p>
+    <section class="error-messages-container">
+      <div class="error-messsage"></div>
+    </section>
+    <br>
     <button class="closeFlashBTN">Okay</button>
   </dialog>
 
@@ -91,40 +94,42 @@
     <section class="box-content-register">
       <span class="close-box">&times;</span>
       <h1>Register</h1>
-      <label>Email:</label>
-      <div class='required'>
-        <input id="register-email" type="email" class="input-res">
-      </div>
-      <br>
-      <label>Pick a username (this will be your handle and it must be unique):</label>
-      <div class='required'>
-        <input id="register-handle" type="text" class="input-res">
-      </div>
-      <br>
-      <label>Enter your name (this does <i>not</i> have to be unique):</label>
-      <div class='required'>
-        <input id="register-name" type="text" class="input-res">
-      </div>
-      <br>
-      <label>Password:</label>
-      <div class='required'>
-        <input id="register-password" type="password" class="input-res">
-      </div>
-      <br>
-      <label>Re-enter password:</label>
-      <div class='required'>
-        <input id="register-password-reenter" type="password" class="input-res">
-      </div>
-      <br>
-      <input id="register" type="submit" value="Register" class="buttonBTN">
+      <form id="registration-form" method="POST">
+        <label>Email:</label>
+        <div class='required-registration-email'>
+          <input id="register-email" type="email" class="input-res">
+        </div>
+        <br>
+        <label>Pick a username (this will be your handle and it must be unique):</label>
+        <div class='required-registration-handle'>
+          <input id="register-handle" type="text" class="input-res">
+        </div>
+        <br>
+        <label>Enter your name (this does <i>not</i> have to be unique):</label>
+        <div class='required-registration-name'>
+          <input id="register-name" type="text" class="input-res">
+        </div>
+        <br>
+        <label>Password:</label>
+        <div class='required-registration-password'>
+          <input id="register-password" type="password" class="input-res">
+        </div>
+        <br>
+        <label>Re-enter password:</label>
+        <div class='required-registration-password-confirmation'>
+          <input id="register-password-confirmation" type="password" class="input-res">
+        </div>
+        <br>
+        <input id="register" type="submit" value="Register" class="buttonBTN">
+      </form>
     </section>
 
     <!-- Login -->
     <section class="box-content-login">
       <span class="close-box">&times;</span>
       <h1>Login</h1>
-      <label>Email/Username:</label>
       <form id="login-form" method="POST">
+        <label>Email/Username:</label>
         <div class='required-login-email-handle'>
           <input id="login-email-handle" type="text" class="input-res">
         </div>
