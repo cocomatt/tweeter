@@ -32,6 +32,9 @@ $(document).ready(function() {
   const toggleNavMenu = function openCloseSiteNavMenu(event) {
     event.stopPropagation();
     $('.nav-list-items').slideToggle();
+    if ($('[class^=box-content]')) {
+      $('[class^=box-content]').slideUp();
+    }
   };
 
   const hideNavMenu = function closesNavMenuWhenUserClicksElsewhereInTheDocument() {
