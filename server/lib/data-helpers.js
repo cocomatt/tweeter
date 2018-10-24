@@ -47,8 +47,10 @@ module.exports = function makeDataHelpers(db) {
     login: function(loginid, password, callback) {
       db.collection('users').find({ $or: [ { handle: loginid }, { email: loginid } ] }).toArray((err, userArray) => {
         if (err) {
-          return callback(err);
+          callback(err, null);
         } else if (!userArray[0]) {
+          callback(null, false);
+        } else if (bcrypt.compareSync(password, userArray[0].hashed_password) === false) {
           callback(null, false);
         } else if (bcrypt.compareSync(password, userArray[0].hashed_password)) {
           callback(null, userArray[0]);

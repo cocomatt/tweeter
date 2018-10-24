@@ -23,7 +23,6 @@ module.exports = function(DataHelpers) {
   });
 
   usersRoutes.post('/register', function(req, res) {
-    console.log('req.body under /register: ', req.body);
     if (!req.body) {
       res.status(400).json({
         error: 'invalid request: no data in POST body',
@@ -31,19 +30,15 @@ module.exports = function(DataHelpers) {
       return;
     }
 
-    const password = JSON.stringify(req.body.newUser.password);
-    console.log('password: ', password);
-
     const newUser = {
       handle: req.body.newUser.handle,
       name: req.body.newUser.name,
       email: req.body.newUser.email,
-      hashed_password: bcrypt.hashSync(password, salt),
+      hashed_password: bcrypt.hashSync(req.body.newUser.password, salt),
       avatars: userHelper.generateRandomAvatar(req.body.newUser.handle),
     };
 
     DataHelpers.register(newUser, (err, registrationStatus) => {
-      console.log('registrationStatus under /register: ', registrationStatus);
       let emailExists = 'emailExists';
       let handleExists = 'handleExists';
       if (err) {
@@ -60,8 +55,6 @@ module.exports = function(DataHelpers) {
         res.status(200).json({errorMessages: errorMessages});
       } else if (registrationStatus === true) {
         req.session.user_id = newUser._id;
-        console.log(`new user ${newUser.handle} has been registered`);
-        console.log('user: ', newUser);
         res.status(200).json({newUser: newUser});
       } else {
         res.status(403).send();
@@ -70,7 +63,6 @@ module.exports = function(DataHelpers) {
   });
 
   usersRoutes.post('/login', function(req, res) {
-    console.log('req.body under /login: ', req.body);
     if (!req.body) {
       res.status(400).json({
         error: 'invalid request: no data in POST body',
@@ -85,11 +77,9 @@ module.exports = function(DataHelpers) {
         });
       } else if (validUser === false) {
         let errorMessages = [];
-        errorMessages.push('That user doesn\'t exist. Please enter a valid username or email address. If you haven\'t registered, please do so.');
+        errorMessages.push('Please enter a valid username or email address and the right password.');
         res.status(200).json({errorMessages: errorMessages});
       } else if (validUser) {
-        console.log('user exists and the correct password was entered');
-        console.log('validUser: ', validUser);
         req.session.user_id = validUser._id;
         res.status(200).json({validUser: validUser});
       } else {

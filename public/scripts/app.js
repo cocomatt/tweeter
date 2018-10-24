@@ -142,7 +142,7 @@ $(document).ready(function() {
   };
 
   /* Login validation */
-  const userLogin = function validatesLoginInputs(event) {
+  const userLogin = function validateLoginInputs(event) {
     event.preventDefault();
     let loginid = $(this).siblings('.required-login-email-handle').children('#login-email-handle').val();
     let password = $(this).siblings('.required-login-password').children('#login-password').val();
