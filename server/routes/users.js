@@ -10,18 +10,6 @@ const usersRoutes = express.Router();
 
 module.exports = function(DataHelpers) {
 
-  usersRoutes.get('/users', function(req, res) {
-    DataHelpers.getUsers((err, users) => {
-      if (err) {
-        res.status(500).json({
-          error: err.message,
-        });
-      } else {
-        res.status(200).json(users);
-      }
-    });
-  });
-
   usersRoutes.post('/register', function(req, res) {
     if (!req.body) {
       res.status(400).json({

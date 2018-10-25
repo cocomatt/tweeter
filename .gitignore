@@ -3,3 +3,4 @@ node_modules/
 .DS_Store
 test.js
 mongo_example.js
+bird.png

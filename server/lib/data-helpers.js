@@ -9,16 +9,6 @@ const salt = bcrypt.genSaltSync(10);
 module.exports = function makeDataHelpers(db) {
   return {
 
-    // users
-    getUsers: function(callback) {
-      db.collection('users').find().sort({ created_at: 1 }).toArray((err, users) => {
-        if (err) {
-          return callback(err);
-        }
-        callback(null, users);
-      });
-    },
-
     // acquires registration inputs and checks them against `db`
     register: function(newUser, callback) {
       db.collection('users').find({ $or: [ { handle: newUser.handle }, { email: newUser.email } ] }).toArray((err, userArray) => {

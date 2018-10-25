@@ -183,7 +183,7 @@ $(document).ready(function() {
     }
   };
 
-  const userLogout = function userIsLoggedOut(event) {
+  const userLogout = function userIsLoggedOut() {
     $.ajax({
       url: '/logout',
       method: 'POST',
